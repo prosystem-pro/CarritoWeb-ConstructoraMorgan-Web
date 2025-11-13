@@ -1,0 +1,117 @@
+.footer-section {
+    background-color: #e8e8e8;
+    padding-top: 3rem;
+    padding-bottom: 0;
+}
+
+.footer-logo img {
+    max-height: 120px;
+    width: auto;
+}
+
+.contact-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.contact-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 0.5rem;
+}
+
+.contact-content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contact-content i {
+    font-size: 2.5rem;
+    color: #000;
+}
+
+.contact-text {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #000;
+    line-height: 1.4;
+}
+
+.email-link {
+    color: #000;
+    text-decoration: underline;
+}
+
+.email-link:hover {
+    color: #333;
+    text-decoration: underline;
+}
+
+.copyright-bar {
+    background-color: #EADEDE;
+    position: relative;
+    padding: 2.5rem 0 1.5rem 0;
+    margin-top: 2rem;
+}
+
+.copyright-bar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0.75rem;
+    background: linear-gradient(90deg, #FF8C00 0%, #FFA500 50%, #FFD700 100%);
+}
+
+.copyright-text {
+    margin: 0;
+    color: #666;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+@media (max-width: 767px) {
+    .footer-logo {
+        margin-bottom: 1.5rem;
+    }
+
+    .footer-logo img {
+        max-height: 90px;
+    }
+
+    .contact-card {
+        padding: 1.5rem 0.5rem;
+    }
+
+    .contact-item {
+        border-bottom: 1px solid #e8e8e8;
+        padding: 1.5rem 0.5rem;
+    }
+
+    .contact-item:last-child {
+        border-bottom: none;
+    }
+
+    .contact-content i {
+        font-size: 2rem;
+    }
+
+    .contact-text {
+        font-size: 0.85rem;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .contact-text {
+        font-size: 0.85rem;
+    }
+
+    .contact-content i {
+        font-size: 2rem;
+    }
+}

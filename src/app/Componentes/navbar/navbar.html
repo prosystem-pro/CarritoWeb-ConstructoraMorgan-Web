@@ -1,0 +1,41 @@
+<nav class="navbar navbar-expand-lg navbar-dark"> <!-- "fixed-top" para ponerlo fijo en el top -->
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <img src="logo/LogoGrupoMorgan.png" alt="Logo Grupo Morgan">
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a routerLink="/inicio" routerLinkActive="active-link" class="nav-link">INICIO</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/empresa" routerLinkActive="active-link" class="nav-link">EMPRESA</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/proyectos" routerLinkActive="active-link" class="nav-link">PROYECTOS</a>
+        </li>
+      </ul>
+
+      <div class="d-flex text-white">
+        <i class="bi bi-facebook fs-4"></i>
+        <i class="bi bi-instagram fs-4 ms-3"></i>
+        <i class="bi bi-tiktok fs-4 ms-3"></i>
+      </div>
+
+      <div class="d-flex ms-3">
+        <button class="btn btn-contacto text-white fw-bold" type="button">CONTACTO
+        </button>
+        <!-- Botón para cerrar sesión -->
+        <a *ngIf="Permiso.TienePermiso('', '')" class="nav-link mobile-logout-container" title="Cerrar sesión"
+          (click)="cerrarSesion()">
+          Cerrar sesión <i class="bi bi-box-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>

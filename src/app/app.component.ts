@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './Componentes/header/header.component';
 import { NgIf } from '@angular/common';
-import { FooterComponent } from './Componentes/footer/footer.component';
 import { ReporteVistaServicio } from './Servicios/ReporteVistaServicio';
 import { ReporteTiempoPaginaServicio } from './Servicios/ReporteTiempoPaginaServicio';
 import { Entorno } from './Entornos/Entorno';
@@ -11,10 +10,12 @@ import { SidebarRedSocialComponent } from './Componentes/sidebar-red-social/side
 import { CarritoEstadoService } from './Servicios/CarritoEstadoServicio';
 import { PermisoServicio } from './Autorizacion/AutorizacionPermiso';
 import { LoginServicio } from './Servicios/LoginServicio';
+import { Navbar } from './Componentes/navbar/navbar';
+import { Footer } from './Componentes/footer/footer';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, NgIf, FooterComponent, SidebarRedSocialComponent],
+  imports: [RouterOutlet, Navbar, HeaderComponent, Footer, NgIf, SidebarRedSocialComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -204,7 +205,7 @@ export class AppComponent implements OnInit {
 
   mostrarSidebar(): boolean {
     return !(
-      this.Permiso.TienePermiso('RedSocial','VerUnidad') &&
+      this.Permiso.TienePermiso('RedSocial', 'VerUnidad') &&
       this.router.url.startsWith('/reporte')
     );
   }

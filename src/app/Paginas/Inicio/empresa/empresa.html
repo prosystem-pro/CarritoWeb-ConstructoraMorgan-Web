@@ -1,0 +1,138 @@
+<section class="quienes-somos-section">
+    <h1 class="text-center">QUIENES SOMOS PENDIENTE 😒</h1>
+</section>
+
+<!-- Sección Nuestros Valores -->
+<section class="nuestros-valores-section">
+    <div class="container">
+        <!-- Título -->
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="valores-title">NUESTROS VALORES</h2>
+            </div>
+        </div>
+
+        <!-- Grid de Valores -->
+        <div class="row g-4 justify-content-center">
+            <!-- Responsabilidad -->
+            <div class="col-lg-3 col-md-4 col-sm-6 col-6 col-6">
+                <div class="valor-card">
+                    <img src="valores/responsabilidad.png" alt="Responsabilidad" class="valor-img">
+                </div>
+            </div>
+
+            <!-- Calidad -->
+            <div class="col-lg-3 col-md-4 col-sm-6 col-6 col-6">
+                <div class="valor-card">
+                    <img src="/valores/calidad.png" alt="Calidad" class="valor-img">
+                </div>
+            </div>
+
+            <!-- Honestidad -->
+            <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                <div class="valor-card">
+                    <img src="/valores/honestidad.png" alt="Honestidad" class="valor-img">
+                </div>
+            </div>
+
+            <!-- Confianza -->
+            <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                <div class="valor-card">
+                    <img src="/valores/confianza.png" alt="Confianza" class="valor-img">
+                </div>
+            </div>
+
+            <!-- Compromiso -->
+            <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                <div class="valor-card">
+                    <img src="/valores/compromiso.png" alt="Compromiso" class="valor-img">
+                </div>
+            </div>
+
+            <!-- Seguridad -->
+            <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                <div class="valor-card">
+                    <img src="/valores/seguridad.png" alt="Seguridad" class="valor-img">
+                </div>
+            </div>
+
+            <!-- Respeto -->
+            <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                <div class="valor-card">
+                    <img src="/valores/respeto.png" alt="Respeto" class="valor-img">
+                </div>
+            </div>
+
+            <!-- Inspiración -->
+            <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                <div class="valor-card">
+                    <img src="/valores/inspiracion.png" alt="Inspiración" class="valor-img">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Sección Nuestro Compromiso -->
+<section class="compromiso-section">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <!-- Columna de texto (izquierda) -->
+            <div class="col-lg-5 col-md-12">
+                <div class="compromiso-content">
+                    <p class="compromiso-intro">
+                        <strong>E</strong>n Morgan Style Constructora, nuestro compromiso es la columna
+                        vertebral de cada proyecto. Nos dedicamos por completo a cada obra, asumiendo
+                        la responsabilidad total de principio a fin.
+                    </p>
+
+                    <h3 class="compromiso-subtitle">Esto significa:</h3>
+
+                    <ul class="compromiso-list">
+                        <li>
+                            <strong>Cumplimiento de Plazos:</strong> Respetamos tu tiempo y nos
+                            esforzamos por cumplir rigurosamente con los plazos acordados para la entrega.
+                        </li>
+                        <li>
+                            <strong>Gestión de Presupuestos:</strong> Trabajamos con total transparencia
+                            para asegurar que el proyecto se mantenga dentro del presupuesto planificado,
+                            sin sorpresas inesperadas.
+                        </li>
+                        <li>
+                            <strong>Dedicación Total:</strong> Desde la fase de planificación hasta el último
+                            acabado, nuestro equipo está 100% enfocado en lograr la visión del cliente.
+                        </li>
+                    </ul>
+
+                    <p class="compromiso-cierre">
+                        Para nosotros, el compromiso no es solo una palabra; es una promesa de que
+                        haremos todo lo que esté en nuestras manos para que tu proyecto sea un éxito rotundo.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Columna del logo (centro) -->
+            <div class="col-lg-2 col-md-12">
+                <div class="compromiso-logo-wrapper">
+                    <img src="logo/LogoGrupoMorganNegro.png" alt="Grupo Morgan Style Constructora"
+                        class="compromiso-logo">
+                </div>
+            </div>
+
+            <!-- Columna de imagen (derecha) -->
+            <div class="col-lg-5 col-md-12">
+                <div class="compromiso-image-wrapper">
+                    <img src="compromiso-background.png" alt="Morgan Style Constructora Compromiso"
+                        class="compromiso-img">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Sección carrusel 3d -->
+@if (datosListos && detallesCarrusel && detallesCarrusel.length > 0) {
+<app-carousel [itemsInput]="detallesCarrusel"></app-carousel>
+} @else {
+<div class="loading">Cargando imágenes...</div>
+}

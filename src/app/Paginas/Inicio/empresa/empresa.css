@@ -1,0 +1,271 @@
+.nuestros-valores-section {
+    padding: 80px 0;
+    background: linear-gradient(to bottom, #f8f9fa 0%, #e9ecef 100%);
+    position: relative;
+}
+
+.nuestros-valores-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 15px;
+    background: linear-gradient(to right, #ff9800 0%, #ff6f00 100%);
+}
+
+.valores-title {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #2c3e50;
+    letter-spacing: 2px;
+    margin-bottom: 60px;
+}
+
+.valor-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    transition: transform 0.3s ease;
+}
+
+.valor-card:hover {
+    transform: translateY(-10px);
+}
+
+.valor-img {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.2));
+}
+
+.valor-card:hover .valor-img {
+    transform: scale(1.05);
+    filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.3));
+}
+
+@media (max-width: 992px) {
+    .valores-title {
+        font-size: 2.5rem;
+    }
+
+    .valor-img {
+        max-width: 180px;
+    }
+}
+
+@media (max-width: 768px) {
+    .nuestros-valores-section {
+        padding: 60px 0;
+    }
+
+    .valores-title {
+        font-size: 2rem;
+        margin-bottom: 40px;
+    }
+
+    .valor-img {
+        max-width: 160px;
+    }
+}
+
+@media (max-width: 576px) {
+    .valores-title {
+        font-size: 1.8rem;
+    }
+
+    .valor-img {
+        max-width: 140px;
+    }
+
+    .valor-card {
+        padding: 15px;
+    }
+}
+
+.compromiso-section {
+    padding: 80px 0;
+    background-color: #ffffff;
+}
+
+.compromiso-content {
+    padding: 40px 50px;
+}
+
+.compromiso-intro {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    text-align: justify;
+}
+
+.compromiso-intro strong {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #000;
+}
+
+.compromiso-subtitle {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 20px;
+}
+
+.compromiso-list {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 30px;
+}
+
+.compromiso-list li {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    padding-left: 25px;
+    position: relative;
+    text-align: justify;
+}
+
+.compromiso-list li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.compromiso-list li strong {
+    font-weight: 700;
+    color: #000;
+}
+
+.compromiso-cierre {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #2c3e50;
+    font-weight: 500;
+    text-align: justify;
+}
+
+.compromiso-logo-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.compromiso-logo {
+    width: 100%;
+    max-width: 250px;
+    height: auto;
+    object-fit: contain;
+}
+
+.compromiso-image-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.compromiso-img {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+@media (max-width: 992px) {
+    .compromiso-content {
+        padding: 30px 40px;
+        margin-bottom: 30px;
+    }
+
+    .compromiso-intro {
+        font-size: 1rem;
+    }
+
+    .compromiso-intro strong {
+        font-size: 2rem;
+    }
+
+    .compromiso-list li {
+        font-size: 0.95rem;
+    }
+
+    .compromiso-cierre {
+        font-size: 1rem;
+    }
+
+    .compromiso-logo-wrapper {
+        margin-bottom: 30px;
+    }
+
+    .compromiso-logo {
+        max-width: 200px;
+    }
+
+    .compromiso-image-wrapper {
+        margin-bottom: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .compromiso-section {
+        padding: 60px 0;
+    }
+
+    .compromiso-content {
+        padding: 20px 30px;
+    }
+
+    .compromiso-intro strong {
+        font-size: 1.8rem;
+    }
+
+    .compromiso-subtitle {
+        font-size: 1.1rem;
+    }
+
+    .compromiso-logo {
+        max-width: 180px;
+    }
+}
+
+@media (max-width: 576px) {
+    .compromiso-content {
+        padding: 20px;
+    }
+
+    .compromiso-intro {
+        font-size: 0.95rem;
+    }
+
+    .compromiso-intro strong {
+        font-size: 1.5rem;
+    }
+
+    .compromiso-list li {
+        font-size: 0.9rem;
+        padding-left: 20px;
+    }
+
+    .compromiso-cierre {
+        font-size: 0.95rem;
+    }
+
+    .compromiso-logo {
+        max-width: 150px;
+    }
+}

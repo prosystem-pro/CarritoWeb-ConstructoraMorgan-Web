@@ -1,0 +1,31 @@
+<div class="flex flex-col items-center justify-center w-full p-6 bg-[#89FAD0] contenedor-carusel">
+    <h1 class="text-center text-white text-2xl md:text-3xl font-semibold mb-4">
+        DISEÑOS PROFESIONALES 3D
+    </h1>
+
+    <div id="carousel" class="noselect relative font-lobster mt-4">
+        <!-- Flecha Izquierda -->
+        <div class="arrow arrow-left" (click)="moveLeft()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m15 18-6-6 6-6" />
+            </svg>
+        </div>
+
+        <!-- Elementos del Carrusel -->
+        @for (item of visibleItems(); track item.key) {
+        <div [class]="item.className">
+            <img [src]="item.imageUrl" [alt]="item.alt || 'Imagen carrusel'"
+                class="w-full h-full object-cover rounded-lg" />
+        </div>
+        }
+
+        <!-- Flecha Derecha -->
+        <div class="arrow arrow-right" (click)="moveRight()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m9 18 6-6-6-6" />
+            </svg>
+        </div>
+    </div>
+</div>

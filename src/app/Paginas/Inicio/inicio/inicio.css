@@ -1,0 +1,235 @@
+.capa-img {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.servicio-card {
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    height: 100%;
+}
+
+
+.servicio-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.servicio-card img {
+    transition: transform 0.3s ease;
+    object-fit: cover;
+}
+
+.servicio-card:hover img {
+    transform: scale(1.1);
+}
+
+ul {
+    list-style-type: disc;
+    padding-left: 1.2rem;
+}
+
+li {
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+}
+
+.diferenciador-card {
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.diferenciador-card.text-white {
+    background-color: #000053;
+}
+
+.diferenciador-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.diferenciador-card i {
+    transition: transform 0.3s ease;
+}
+
+.diferenciador-card:hover i {
+    transform: scale(1.1);
+}
+
+/* --- */
+/* Sección de estadísticas */
+
+.estadistica-img-small {
+    height: 200px;
+    overflow: hidden;
+}
+
+.estadistica-img-vertical {
+    height: 416px;
+    overflow: hidden;
+}
+
+.estadistica-card {
+    min-height: 200px;
+}
+
+.estadistica-img-small img,
+.estadistica-img-vertical img {
+    transition: transform 0.4s ease;
+}
+
+.estadistica-img-small:hover img,
+.estadistica-img-vertical:hover img {
+    transform: scale(1.05);
+}
+
+.estadistica-card h2 {
+    line-height: 1;
+}
+
+/* Responsive para estadísticas */
+@media (max-width: 991px) {
+    .estadistica-img-vertical {
+        height: 250px;
+    }
+
+    .estadistica-img-small {
+        height: 250px;
+    }
+
+    .estadistica-card {
+        min-height: 250px;
+    }
+
+    .estadistica-card h2 {
+        font-size: 1.5rem !important;
+    }
+}
+
+.hero-section {
+    position: relative;
+    width: 100%;
+    height: 700px;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.overlay-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    opacity: 0.7;
+    z-index: 0;
+}
+
+.hero-section h1 {
+    font-size: 3.8rem;
+    line-height: 1.1;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.hero-section p {
+    font-size: 1.25rem;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.custom-btn-orange {
+    background-color: #FF8C00;
+    border-color: #FF8C00;
+    color: white;
+    padding: 1rem 2.5rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.custom-btn-orange:hover {
+    background-color: #FFA500;
+    border-color: #FFA500;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.texto-estadisticaN {
+    font-size: 3.5rem;
+}
+
+.texto-estadisticaT {
+    font-size: 1rem;
+}
+
+
+@media (max-width: 991px) {
+    .hero-section {
+        height: 500px;
+    }
+
+    .hero-section h1 {
+        font-size: 3rem;
+    }
+
+    .hero-section p {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .hero-section {
+        height: 400px;
+        text-align: center;
+    }
+
+    .hero-section h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-section p {
+        font-size: 1rem;
+        padding-right: 0 !important;
+    }
+
+    .col-lg-8.col-md-10.mx-auto.text-center.text-lg-start {
+        text-align: center !important;
+    }
+
+    .texto-estadisticaT {
+        font-size: 0.85rem;
+    }
+
+    .texto-defirenciador {
+        font-size: 1.6rem !important;
+    }
+
+    .texto-disenio {
+        font-size: 3rem !important;
+    }
+
+    .texto-futuro {
+        font-size: 5.5rem !important;
+    }
+
+    .texto-soluciones {
+        font-size: 3rem !important;
+    }
+
+    .texto-arq-ing {
+        font-size: 2rem !important;
+    }
+}

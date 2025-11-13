@@ -1,0 +1,166 @@
+<div class="container my-3 text-end" *ngIf="Permiso.TienePermiso('CarruselImagen', 'SubirImagen')">
+    <button type="button" (click)="toggleModoEdicion()" class="btn edit-main-button btn-edicion"
+        [ngClass]="{'btn-success': modoEdicion, 'btn-light': !modoEdicion}" aria-label="Alternar modo edición">
+        <i class="bi" [ngClass]="{'bi-pencil-square': !modoEdicion, 'bi-check-lg': modoEdicion}"
+            [style.color]="modoEdicion ? '#ffffff' : '#000000'"></i>
+        <span class="ms-2">{{ modoEdicion ? 'Finalizar edición' : 'Editar galería' }}</span>
+    </button>
+</div>
+
+<section>
+    <!-- Título de la galería -->
+    <div class="row justify-content-center mb-5">
+        <div *ngIf="nombreGaleria.includes('PROVEEDORES')">
+            <div class="col-12">
+                <h2 class="text-center fw-bold" style="font-size: 2.5rem; letter-spacing: 2px; color: #FF3300;">
+                    {{ nombreGaleria }}
+                </h2>
+            </div>
+        </div>
+        <div style="background-color: #000053; padding: 0.3rem;" *ngIf="nombreGaleria.includes('CLIENTES')">
+            <div class="col-12">
+                <h2 class="text-center fw-bold texto-cliente"
+                    style="font-size: 2.5rem; letter-spacing: 1px; color: #ffffff;">
+                    {{ nombreGaleria }}
+                </h2>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <!-- Galería de imágenes -->
+        <div class="row g-4 align-items-center justify-content-center">
+
+            <!-- Botón para agregar nueva imagen (solo en modo edición y si no se ha alcanzado el límite) -->
+            <div class="col-6 col-md-4 col-lg-custom-5" *ngIf="modoEdicion && puedeAgregarImagen()">
+                <div class="galeria-card add-card">
+                    <div class="position-relative add-image-container" (click)="nuevoFileInput.click()" tabindex="0"
+                        role="button" aria-label="Añadir nueva imagen" (keydown.enter)="nuevoFileInput.click()">
+
+                        <div *ngIf="!nuevaImagen.imagenPreview"
+                            class="d-flex justify-content-center align-items-center h-100">
+                            <i class="bi bi-plus-circle-fill" style="font-size: 3rem; color: #5f5e5c;"></i>
+                        </div>
+
+                        <img *ngIf="nuevaImagen.imagenPreview" [src]="nuevaImagen.imagenPreview" class="galeria-image"
+                            alt="Vista previa de nueva imagen">
+
+                        <div *ngIf="cargandoImagen || isLoading"
+                            class="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center loading-overlay">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Cargando...</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-success text-white w-100 fw-bold rounded-3 mt-2"
+                        [disabled]="!nuevaImagen.imagen || cargandoImagen || isLoading" (click)="guardarNuevoImagen()">
+                        <span *ngIf="!cargandoImagen && !isLoading">
+                            <i class="bi bi-plus-lg me-2"></i>AÑADIR
+                        </span>
+                        <span *ngIf="cargandoImagen || isLoading">
+                            <i class="bi bi-arrow-repeat spinner-rotate me-2"></i>SUBIENDO...
+                        </span>
+                    </button>
+
+                    <input #nuevoFileInput type="file" class="d-none" (change)="seleccionarImagenNuevo($event)"
+                        accept="image/*" aria-label="Seleccionar imagen para añadir">
+                </div>
+            </div>
+
+            <!-- Imágenes existentes -->
+            <div class="col-6 col-md-4 col-lg-custom-5" *ngFor="let imagen of imagenesActivas(); let i = index"
+                [attr.data-orden]="imagen.Orden">
+
+                <div class="galeria-card">
+                    <!-- Vista normal -->
+                    <div class="galeria-card-inner" *ngIf="!esItemEnEdicion(imagen)">
+
+                        <div class="galeria-logo position-relative">
+                            <img [src]="imagen.UrlImagen" [alt]="obtenerAltText(imagen)" class="galeria-image"
+                                loading="lazy">
+
+                            <!-- Botones de edición (solo en modo edición) -->
+                            <div class="edit-controls" *ngIf="modoEdicion">
+                                <button *ngIf="Permiso.TienePermiso('CarruselImagen', 'Editar')" type="button"
+                                    class="btn btn-sm btn-primary edit-btn" (click)="iniciarEdicion(imagen)"
+                                    aria-label="Editar imagen" title="Editar imagen">
+                                    <i class="bi bi-pencil"></i>
+                                </button>
+                                <button *ngIf="Permiso.TienePermiso('CarruselImagen', 'Eliminar')" type="button"
+                                    class="btn btn-sm btn-danger delete-btn" (click)="eliminarImagen(imagen)"
+                                    aria-label="Eliminar imagen" title="Eliminar imagen">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Vista de edición -->
+                    <div class="galeria-card-edit" *ngIf="esItemEnEdicion(imagen)">
+                        <div class="position-relative edit-image-wrapper" (click)="editFileInput.click()" tabindex="0"
+                            role="button" aria-label="Cambiar imagen" (keydown.enter)="editFileInput.click()">
+
+                            <img [src]="imagenEdicion.imagenPreview" class="galeria-image" alt="Imagen en edición">
+
+                            <div class="image-edit-overlay text-white">
+                                <i class="bi bi-camera-fill"></i>
+                                <p class="mt-2 mb-0">Cambiar imagen</p>
+                            </div>
+
+                            <div *ngIf="cargandoImagen || isLoading"
+                                class="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center loading-overlay">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Cargando...</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="edit-form p-2">
+                            <div class="d-flex gap-2">
+                                <button type="button" class="btn btn-success btn-sm flex-grow-1"
+                                    [disabled]="cargandoImagen || isLoading || !imagenEdicion.imagen"
+                                    (click)="guardarEdicion()" aria-label="Guardar cambios">
+                                    <i class="bi bi-check-lg"></i> Guardar
+                                </button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm"
+                                    [disabled]="cargandoImagen || isLoading" (click)="cancelarEdicion()"
+                                    aria-label="Cancelar edición">
+                                    <i class="bi bi-x-lg"></i> Cancelar
+                                </button>
+                            </div>
+                        </div>
+
+                        <input #editFileInput type="file" class="d-none" (change)="seleccionarImagenEdicion($event)"
+                            accept="image/*" aria-label="Seleccionar nueva imagen">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mensaje cuando no hay imágenes -->
+        <div class="row" *ngIf="imagenesActivas().length === 0 && !modoEdicion">
+            <div class="col-12 text-center py-5">
+                <p class="text-muted fs-5">
+                    <i class="bi bi-images me-2"></i>
+                    No hay imágenes disponibles en este momento.
+                </p>
+            </div>
+        </div>
+
+        <!-- Mensaje informativo sobre el límite (solo en modo edición) -->
+        <div class="row mt-3" *ngIf="modoEdicion">
+            <div class="col-12 text-center">
+                <small class="text-muted">
+                    <i class="bi bi-info-circle me-1"></i>
+                    {{ imagenesActivas().length }} de {{ MAX_IMAGENES }} imágenes
+                    <span *ngIf="!puedeAgregarImagen()" class="text-warning ms-2">
+                        <i class="bi bi-exclamation-triangle me-1"></i>
+                        Límite alcanzado
+                    </span>
+                </small>
+            </div>
+        </div>
+    </div>
+</section>
+
+<app-spinner-global [visible]="isLoading && !cargandoImagen"></app-spinner-global>

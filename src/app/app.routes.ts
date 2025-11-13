@@ -14,14 +14,18 @@ import { ReporteTiempoPaginaComponent } from './Paginas/Inicio/reporte-tiempo-pa
 import { PagoComponent } from './Paginas/Inicio/pago/pago.component';
 import { LoginGuard } from './Servicios/loginGuard';
 import { SpinnerGlobalComponent } from './Componentes/spinner-global/spinner-global.component';
+import { Inicio } from './Paginas/Inicio/inicio/inicio';
+import { Empresa } from './Paginas/Inicio/empresa/empresa';
+import { Proyectos } from './Paginas/Inicio/proyectos/proyectos';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/nosotros', pathMatch: 'full' },
+  { path: '', redirectTo: '/inicio', pathMatch: 'full' },
   { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
 
   //Rutas publicas
-  { path: 'nosotros', component: NosotrosComponent },
-  { path: 'clasificacion', component: MenuCategoriaComponent },
+  { path: 'inicio', component: Inicio },
+  { path: 'empresa', component: Empresa },
+  { path: 'proyectos', component: Proyectos },
   { path: 'productos/:codigo/:nombre', component: ProductosComponent },
   { path: 'productos/buscar', component: ProductosComponent },
   { path: 'contacto', component: ContactoComponent },
@@ -36,5 +40,5 @@ export const routes: Routes = [
   { path: 'reporte-tiempo-pagina', component: ReporteTiempoPaginaComponent, canActivate: [AutorizacionRuta] },
   { path: 'pago', component: PagoComponent, canActivate: [AutorizacionRuta] },
 
-  { path: '**', redirectTo: 'nosotros' },
+  { path: '**', redirectTo: 'inicio' },
 ];
