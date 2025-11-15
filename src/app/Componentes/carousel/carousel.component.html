@@ -1,3 +1,12 @@
+<!-- Botón de edición (solo si tiene permisos) -->
+<div class="container my-3 text-end" *ngIf="Permiso.TienePermiso('CarruselImagen', 'SubirImagen')">
+    <button type="button" (click)="abrirModalEdicion()" class="btn btn-primary">
+        <i class="bi bi-pencil-square me-2"></i>
+        Administrar Imágenes
+    </button>
+</div>
+
+<!-- Seccion carrusel -->
 <div class="flex flex-col items-center justify-center w-full p-6 bg-[#89FAD0] contenedor-carusel">
     <h1 class="text-center text-white text-2xl md:text-3xl font-semibold mb-4">
         DISEÑOS PROFESIONALES 3D
@@ -29,3 +38,11 @@
         </div>
     </div>
 </div>
+
+<!-- Modal Component -->
+<app-carousel-modal
+    [imagenesCarrusel]="convertirParaModal()"
+    [codigoCarrusel]="codigoCarrusel"
+    (imagenesActualizadas)="actualizarImagenes($event)"
+    #modalCarrusel>
+</app-carousel-modal>

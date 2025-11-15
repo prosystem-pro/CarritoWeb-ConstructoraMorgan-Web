@@ -44,7 +44,6 @@ export class Inicio implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log("Iniciar inicio");
     this.cargarCarruselPorUbicacion('inicio-proveedores', 'proveedores');
     this.cargarCarruselPorUbicacion('inicio-clientes', 'clientes');
   }
@@ -66,12 +65,10 @@ export class Inicio implements OnInit {
 
           this.cargarImagenesCarrusel(carruselEncontrado.CodigoCarrusel, tipo);
         } else {
-          console.warn(`No se encontró carrusel con ubicación: ${ubicacion}`);
           this.crearCarruselPorDefecto(ubicacion, tipo);
         }
       },
       error: (err) => {
-        console.error(`Error al obtener carrusel de ${ubicacion}:`, err);
         this.alertaServicio.MostrarError(`Error al obtener datos de ${tipo}`);
         this.marcarComoListo(tipo);
       }
@@ -93,7 +90,6 @@ export class Inicio implements OnInit {
           this.clientesListos = true;
         }
 
-        console.log(`Imágenes de ${tipo} cargadas:`, imagenes.length);
       },
       error: (err) => {
         console.error(`Error al cargar imágenes de ${tipo}:`, err);
@@ -111,7 +107,6 @@ export class Inicio implements OnInit {
 
   private crearCarruselPorDefecto(ubicacion: string, tipo: 'proveedores' | 'clientes'): void {
     if (!this.codigoEmpresa) {
-      console.warn('No se puede crear carrusel sin código de empresa');
       this.marcarComoListo(tipo);
       return;
     }

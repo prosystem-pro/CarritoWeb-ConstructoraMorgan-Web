@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, ElementRef, signal, computed, OnChanges, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef, signal, computed, OnChanges, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CarruselImagen } from '../../Modelos/CarruselImagen';
@@ -21,31 +21,32 @@ interface NuevaImagen {
   imagenPreview: string | null;
 }
 
+declare var bootstrap: any;
+
 @Component({
-  selector: 'app-galeria',
-  standalone: true,
+  selector: 'app-carousel-modal',
   imports: [CommonModule, FormsModule, SpinnerGlobalComponent],
-  templateUrl: './galeria.componente.html',
-  styleUrl: './galeria.componente.css'
+  templateUrl: './carousel-modal.component.html',
+  styleUrl: './carousel-modal.component.css'
 })
-export class GaleriaComponente implements OnChanges {
+export class CarouselModalComponent implements OnChanges {
   private readonly NombreEmpresa = `${Entorno.NombreEmpresa}`;
 
-  @Input() imagenesGaleria: CarruselImagen[] = [];
-  @Input() nombreGaleria: string = '';
+  @Input() imagenesCarrusel: CarruselImagen[] = [];
   @Input() codigoCarrusel: number = 0;
+  
+  @Output() imagenesActualizadas = new EventEmitter<CarruselImagen[]>();
 
   @ViewChild('nuevoFileInput') nuevoFileInput!: ElementRef<HTMLInputElement>;
   @ViewChild('editFileInput') editFileInput!: ElementRef<HTMLInputElement>;
 
   imagenesSignal = signal<CarruselImagen[]>([]);
 
-  modoEdicion = false;
   cargandoImagen = false;
   isLoading = false;
   errorMessage: string = '';
 
-  readonly MAX_IMAGENES = 15;
+  readonly MAX_IMAGENES = 20;
 
   nuevaImagen: NuevaImagen = {
     imagen: null,
@@ -61,6 +62,7 @@ export class GaleriaComponente implements OnChanges {
   };
 
   itemEnEdicion: CarruselImagen | null = null;
+  private modalInstance: any;
 
   imagenesActivas = computed(() =>
     this.imagenesSignal()
@@ -76,8 +78,24 @@ export class GaleriaComponente implements OnChanges {
   ) { }
 
   ngOnChanges() {
-    if (this.imagenesGaleria) {
-      this.imagenesSignal.set(this.imagenesGaleria);
+    if (this.imagenesCarrusel) {
+      this.imagenesSignal.set(this.imagenesCarrusel);
+    }
+  }
+
+  abrirModal(): void {
+    const modalElement = document.getElementById('modalCarrusel' + this.codigoCarrusel);
+    if (modalElement) {
+      this.modalInstance = new bootstrap.Modal(modalElement);
+      this.modalInstance.show();
+    }
+  }
+
+  cerrarModal(): void {
+    this.cancelarEdicion();
+    this.resetNuevaImagen();
+    if (this.modalInstance) {
+      this.modalInstance.hide();
     }
   }
 
@@ -85,15 +103,8 @@ export class GaleriaComponente implements OnChanges {
     return imagen.NombreCarruselImagen || `Imagen ${imagen.CodigoCarruselImagen}`;
   }
 
-  toggleModoEdicion(): void {
-    this.modoEdicion = !this.modoEdicion;
-    if (!this.modoEdicion) {
-      this.cancelarEdicion();
-      this.resetNuevaImagen();
-    }
-  }
-
   seleccionarImagenNuevo(event: Event): void {
+    console.log("Entró en seleccionar Imagen Nuevo");
     const target = event.target as HTMLInputElement;
     const file = target.files?.[0];
 
@@ -114,6 +125,7 @@ export class GaleriaComponente implements OnChanges {
     const reader = new FileReader();
     reader.onload = (e: ProgressEvent<FileReader>) => {
       this.nuevaImagen.imagenPreview = e.target?.result as string;
+      this.cdr.detectChanges();
     };
     reader.readAsDataURL(file);
   }
@@ -138,7 +150,7 @@ export class GaleriaComponente implements OnChanges {
       return;
     }
 
-    this.isLoading = true;
+    this.cargandoImagen = true;
 
     const formData = new FormData();
     formData.append('Imagen', this.nuevaImagen.imagen);
@@ -166,24 +178,15 @@ export class GaleriaComponente implements OnChanges {
 
         const imagenesActualizadas = [...this.imagenesSignal(), nuevaImagenCarrusel];
         this.imagenesSignal.set(imagenesActualizadas);
+        this.imagenesActualizadas.emit(imagenesActualizadas);
 
         this.resetNuevaImagen();
-        this.isLoading = false;
+        this.cargandoImagen = false;
         this.cdr.detectChanges();
       },
       error: (error) => {
-        this.isLoading = false;
-        const tipo = error?.error?.tipo;
-        const mensaje = error?.error?.error?.message || error?.error?.message || 'Ocurrió un error inesperado.';
-
-        if (tipo === 'Alerta') {
-          this.alertaServicio.MostrarAlerta(mensaje);
-        } else {
-          this.alertaServicio.MostrarError({ error: { message: mensaje } });
-        }
-
-        this.errorMessage = mensaje;
-        this.cdr.detectChanges();
+        this.cargandoImagen = false;
+        this.manejarError(error);
       }
     });
   }
@@ -240,6 +243,7 @@ export class GaleriaComponente implements OnChanges {
     const reader = new FileReader();
     reader.onload = (e: ProgressEvent<FileReader>) => {
       this.imagenEdicion.imagenPreview = e.target?.result as string;
+      this.cdr.detectChanges();
     };
     reader.readAsDataURL(file);
   }
@@ -259,7 +263,7 @@ export class GaleriaComponente implements OnChanges {
       return;
     }
 
-    this.isLoading = true;
+    this.cargandoImagen = true;
 
     const formData = new FormData();
     formData.append('Imagen', this.imagenEdicion.imagen);
@@ -284,26 +288,16 @@ export class GaleriaComponente implements OnChanges {
               : img
           );
           this.imagenesSignal.set(imagenesActualizadas);
+          this.imagenesActualizadas.emit(imagenesActualizadas);
         }
 
-        this.isLoading = false;
+        this.cargandoImagen = false;
         this.cancelarEdicion();
         this.cdr.detectChanges();
       },
       error: (error) => {
-        this.isLoading = false;
-
-        const tipo = error?.error?.tipo;
-        const mensaje = error?.error?.error?.message || error?.error?.message || 'Ocurrió un error inesperado.';
-
-        if (tipo === 'Alerta') {
-          this.alertaServicio.MostrarAlerta(mensaje);
-        } else {
-          this.alertaServicio.MostrarError({ error: { message: mensaje } });
-        }
-
-        this.errorMessage = mensaje;
-        this.cdr.detectChanges();
+        this.cargandoImagen = false;
+        this.manejarError(error);
       }
     });
   }
@@ -343,29 +337,18 @@ export class GaleriaComponente implements OnChanges {
               this.alertaServicio.MostrarExito(response.message);
             }
 
-            // Eliminar la imagen de la lista
             const imagenesActualizadas = this.imagenesSignal().filter(
               img => img.CodigoCarruselImagen !== codigoCarruselImagen
             );
             this.imagenesSignal.set(imagenesActualizadas);
+            this.imagenesActualizadas.emit(imagenesActualizadas);
 
             this.isLoading = false;
             this.cdr.detectChanges();
           },
           error: (error) => {
             this.isLoading = false;
-
-            const tipo = error?.error?.tipo;
-            const mensaje = error?.error?.error?.message || error?.error?.message || 'Ocurrió un error inesperado.';
-
-            if (tipo === 'Alerta') {
-              this.alertaServicio.MostrarAlerta(mensaje);
-            } else {
-              this.alertaServicio.MostrarError({ error: { message: mensaje } });
-            }
-
-            this.errorMessage = mensaje;
-            this.cdr.detectChanges();
+            this.manejarError(error);
           }
         });
       }
@@ -374,5 +357,19 @@ export class GaleriaComponente implements OnChanges {
 
   puedeAgregarImagen(): boolean {
     return this.imagenesActivas().length < this.MAX_IMAGENES;
+  }
+
+  private manejarError(error: any): void {
+    const tipo = error?.error?.tipo;
+    const mensaje = error?.error?.error?.message || error?.error?.message || 'Ocurrió un error inesperado.';
+
+    if (tipo === 'Alerta') {
+      this.alertaServicio.MostrarAlerta(mensaje);
+    } else {
+      this.alertaServicio.MostrarError({ error: { message: mensaje } });
+    }
+
+    this.errorMessage = mensaje;
+    this.cdr.detectChanges();
   }
 }

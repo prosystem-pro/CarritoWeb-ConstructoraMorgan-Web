@@ -1,0 +1,39 @@
+.add-card {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.add-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card {
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.spinner-rotate {
+  animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.border-dashed {
+  border-style: dashed !important;
+}
+
+.card-img-top {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}

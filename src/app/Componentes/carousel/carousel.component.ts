@@ -1,4 +1,8 @@
-import { Input, Component, computed, signal } from '@angular/core';
+import { Input, Component, computed, signal, ViewChild  } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { CarouselModalComponent } from '../carousel-modal/carousel-modal.component';
+import { PermisoServicio } from '../../Autorizacion/AutorizacionPermiso';
+import { CarruselImagen } from '../../Modelos/CarruselImagen';
 
 interface CarouselItem {
   id: number;
@@ -13,29 +17,47 @@ interface ApiCarouselImage {
   CodigoCarruselImagen: number;
   UrlImagen: string;
   NombreCarruselImagen?: string;
+  CodigoCarrusel?: number;
+  Orden?: string;
+  Estatus?: number;
 }
 
 @Component({
   selector: 'app-carousel',
-  imports: [],
+  imports: [CommonModule, CarouselModalComponent],
   templateUrl: './carousel.component.html',
   styleUrl: './carousel.component.css'
 })
 export class CarouselComponent {
 
   @Input() itemsInput: ApiCarouselImage[] = [];
+  @Input() codigoCarrusel: number = 0;
 
   items = signal<ApiCarouselImage[]>([]);
   activeIndex = signal(0);
   direction = signal<'left' | 'right'>('right');
+  @ViewChild('modalCarrusel') modalCarrusel!: CarouselModalComponent;
+
+  constructor(public Permiso: PermisoServicio) {}
 
   ngOnInit(): void {
-    console.log("ItemsInput desde caruosel: ", this.itemsInput)
-    // Inicializar items con los datos del Input
+    console.log("ItemsInput desde carrusel: ", this.itemsInput);
     if (this.itemsInput && this.itemsInput.length > 0) {
       this.items.set(this.itemsInput);
     }
   }
+
+  // Computed para convertir items() a formato CarruselImagen para el modal
+  convertirParaModal = computed(() => {
+    return this.items().map(img => ({
+      CodigoCarruselImagen: img.CodigoCarruselImagen,
+      UrlImagen: img.UrlImagen,
+      NombreCarruselImagen: img.NombreCarruselImagen,
+      CodigoCarrusel: img.CodigoCarrusel || this.codigoCarrusel,
+      Orden: img.Orden || '0',
+      Estatus: img.Estatus || 1
+    } as CarruselImagen));
+  });
 
   moveLeft(): void {
     this.direction.set('left');
@@ -84,4 +106,24 @@ export class CarouselComponent {
 
     return items;
   });
+
+  abrirModalEdicion(): void {
+    this.modalCarrusel.abrirModal();
+  }
+
+  actualizarImagenes(imagenesActualizadas: CarruselImagen[]): void {
+    // Convertir CarruselImagen[] a ApiCarouselImage[]
+    const imagenesConvertidas: ApiCarouselImage[] = imagenesActualizadas
+      .filter(img => img.CodigoCarruselImagen !== undefined)
+      .map(img => ({
+        CodigoCarruselImagen: img.CodigoCarruselImagen!,
+        UrlImagen: img.UrlImagen || '',
+        NombreCarruselImagen: img.NombreCarruselImagen,
+        CodigoCarrusel: img.CodigoCarrusel,
+        Orden: img.Orden,
+        Estatus: img.Estatus
+      }));
+
+    this.items.set(imagenesConvertidas);
+  }
 }
