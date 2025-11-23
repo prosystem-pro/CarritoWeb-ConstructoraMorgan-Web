@@ -131,7 +131,7 @@
 </section>
 
 <!-- Sección carrusel 3d -->
-@if (datosListos && detallesCarrusel && detallesCarrusel.length > 0) {
+@if (datosListos && detallesCarrusel) {
 <app-carousel [itemsInput]="detallesCarrusel" [codigoCarrusel]="codigoCarrusel"></app-carousel>
 } @else {
 <div class="loading">Cargando imágenes...</div>

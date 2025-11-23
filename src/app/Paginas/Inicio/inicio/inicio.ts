@@ -44,8 +44,25 @@ export class Inicio implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.cargarCarruselPorUbicacion('inicio-proveedores', 'proveedores');
-    this.cargarCarruselPorUbicacion('inicio-clientes', 'clientes');
+    this.obtenerCodigoEmpresa().then(() => {
+      this.cargarCarruselPorUbicacion('inicio-proveedores', 'proveedores');
+      this.cargarCarruselPorUbicacion('inicio-clientes', 'clientes');
+    });
+  }
+
+  private async obtenerCodigoEmpresa(): Promise<void> {
+    try {
+      const empresa = await this.EmpresaServicio.ConseguirPrimeraEmpresa().toPromise();
+      if (empresa && empresa.CodigoEmpresa) {
+        this.codigoEmpresa = empresa.CodigoEmpresa;
+      } else {
+        console.warn('No se encontró información de empresa');
+        this.alertaServicio.MostrarError('No se pudo obtener la información de la empresa');
+      }
+    } catch (error) {
+      console.error('Error al obtener código de empresa:', error);
+      this.alertaServicio.MostrarError('Error al cargar información de empresa');
+    }
   }
 
   private cargarCarruselPorUbicacion(ubicacion: string, tipo: 'proveedores' | 'clientes'): void {

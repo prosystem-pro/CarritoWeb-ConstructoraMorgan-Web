@@ -43,6 +43,7 @@
 <app-carousel-modal
     [imagenesCarrusel]="convertirParaModal()"
     [codigoCarrusel]="codigoCarrusel"
+    [maxImagenes]="20"
     (imagenesActualizadas)="actualizarImagenes($event)"
     #modalCarrusel>
 </app-carousel-modal>

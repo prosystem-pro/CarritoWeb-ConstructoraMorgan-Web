@@ -34,6 +34,7 @@ export class CarouselModalComponent implements OnChanges {
 
   @Input() imagenesCarrusel: CarruselImagen[] = [];
   @Input() codigoCarrusel: number = 0;
+  @Input() maxImagenes: number = 0;
   
   @Output() imagenesActualizadas = new EventEmitter<CarruselImagen[]>();
 
@@ -78,6 +79,7 @@ export class CarouselModalComponent implements OnChanges {
   ) { }
 
   ngOnChanges() {
+    (this as any).MAX_IMAGENES = this.maxImagenes;
     if (this.imagenesCarrusel) {
       this.imagenesSignal.set(this.imagenesCarrusel);
     }

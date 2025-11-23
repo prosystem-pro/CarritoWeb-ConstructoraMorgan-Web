@@ -4,4 +4,4 @@
     *ngIf="!esLogin() && !esProductos() && !esContacto() && !esOtro() && !carritoAbierto && mostrarSidebar()" />
 <app-footer
     *ngIf="!esLogin() && !esProductos()  && !esReporteProducto() &&!esReporteVista() &&!esReporteRedSocial() &&!esReporteTiempoPagina()" /> -->
-<app-footer></app-footer>
+<app-footer *ngIf="!esLogin()"></app-footer>

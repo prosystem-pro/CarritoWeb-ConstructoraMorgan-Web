@@ -1,0 +1,160 @@
+.proyecto-card {
+  border: none;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  background: #fff;
+}
+
+.proyecto-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Container con aspect ratio fijo para las imágenes */
+.imagen-container {
+  position: relative;
+  width: 100%;
+  padding-top: 75%; /* Aspect ratio 4:3 */
+  overflow: hidden;
+  background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+}
+
+.proyecto-imagen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.3s ease;
+}
+
+.proyecto-card:hover .proyecto-imagen {
+  transform: scale(1.05);
+}
+
+/* Placeholder cuando no hay imagen */
+.imagen-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+/* Controles del carrusel */
+.carousel-control-prev,
+.carousel-control-next {
+  background-color: #000053;
+  top: 75%;
+  width: 60px;
+  opacity: 0.70;
+  /* transition: opacity 0.3s ease; */
+}
+
+.proyecto-card:hover .carousel-control-prev,
+.proyecto-card:hover .carousel-control-next {
+  opacity: 1;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  padding: 10px;
+  width: 30px;
+  height: 30px;
+}
+
+/* Indicadores del carrusel */
+.carousel-indicators {
+  margin-bottom: 10px;
+}
+
+.carousel-indicators button {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  background-color: rgba(255, 255, 255, 0.5);
+  opacity: 1;
+  margin: 0 4px;
+}
+
+.carousel-indicators button.active {
+  background-color: #fff;
+  transform: scale(1.2);
+}
+
+/* Card body */
+.card-body {
+  padding: 1.25rem;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  color: #2c3e50;
+  line-height: 1.3;
+  margin-bottom: 0.75rem;
+  min-height: 2.6rem;
+}
+
+.badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.descripcion-texto {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #6c757d;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 4rem;
+}
+
+/* Botones de administración */
+.btn-sm {
+  font-size: 0.8rem;
+  padding: 0.4rem 0.8rem;
+}
+
+.btn-outline-primary:hover {
+  transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  .imagen-container {
+    padding-top: 65%; /* Aspect ratio más horizontal en móviles */
+  }
+  
+  .card-title {
+    font-size: 1rem;
+    min-height: auto;
+  }
+  
+  .descripcion-texto {
+    -webkit-line-clamp: 2;
+    min-height: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .proyecto-card:hover {
+    transform: none;
+  }
+  
+  .carousel-control-prev,
+  .carousel-control-next {
+    opacity: 0.7;
+  }
+}
