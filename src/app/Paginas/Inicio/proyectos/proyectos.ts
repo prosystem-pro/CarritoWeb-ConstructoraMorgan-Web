@@ -12,6 +12,10 @@ import { AlertaServicio } from '../../../Servicios/Alerta-Servicio';
 import { SpinnerGlobalComponent } from '../../../Componentes/spinner-global/spinner-global.component';
 import { EmpresaServicio } from '../../../Servicios/EmpresaServicio';
 import { Empresa } from '../empresa/empresa';
+import { Servicio } from '../../../Modelos/Servicio';
+import { ServicioServicios } from '../../../Servicios/ServicioServicios';
+import { SafeUrlPipe } from '../../../Servicios/SafePipe';
+import { CarouselProcesoConstruccionComponent } from '../../../Componentes/carousel-proceso-construccion/carousel-proceso-construccion.component';
 
 declare var bootstrap: any;
 
@@ -21,6 +25,8 @@ declare var bootstrap: any;
     FormsModule,
     CarouselProyectoComponent,
     CarouselModalComponent,
+    SafeUrlPipe,
+    CarouselProcesoConstruccionComponent,
     SpinnerGlobalComponent],
   templateUrl: './proyectos.html',
   styleUrl: './proyectos.css'
@@ -30,6 +36,8 @@ export class Proyectos implements OnInit {
 
   proyectos: Carrusel[] = [];
   todasLasImagenes: CarruselImagen[] = [];
+  videoUrl = '';
+  servicioVideo: Servicio | null = null;
   
   isLoading = false;
   modoAdmin = false;
@@ -56,6 +64,7 @@ export class Proyectos implements OnInit {
     private carruselImagenServicio: CarruselImagenServicio,
     private alertaServicio: AlertaServicio,
     private empresaServicio: EmpresaServicio,
+    private servicioServicios: ServicioServicios,
     private cdr: ChangeDetectorRef
   ) {}
 
@@ -63,6 +72,7 @@ export class Proyectos implements OnInit {
     this.verificarModoAdmin();
     this.obtenerCodigoEmpresa();
     this.cargarProyectos();
+    this.cargarServicioVideo();
   }
 
   verificarModoAdmin(): void {
@@ -347,5 +357,91 @@ export class Proyectos implements OnInit {
     } else {
       this.alertaServicio.MostrarError({ error: { message: mensaje } });
     }
+  }
+
+  cargarServicioVideo(): void {
+    this.servicioServicios.Listado().subscribe({
+      next: (resp: any) => {
+        const servicios = resp?.data || [];
+
+        const servicioProyecto = servicios.find((s: any) =>
+          s.Ubicacion?.toLowerCase() === 'proyectos' && s.Estatus === 1
+        );
+
+        if (servicioProyecto) {
+          this.servicioVideo = servicioProyecto;
+          this.videoUrl = servicioProyecto.UrlVideo || '';
+        } else {
+          // No existe video → vista pública sin iframe
+          this.servicioVideo = null;
+          this.videoUrl = '';
+        }
+      },
+      error: () => {
+        this.servicioVideo = null;
+        this.videoUrl = '';
+      }
+    });
+  }
+
+  guardarVideo(): void {
+    if (!this.modoAdmin) return;
+
+    const urlNormalizada = this.normalizarUrlYoutube(this.videoUrl);
+
+    if (!urlNormalizada) {
+      this.alertaServicio.MostrarAlerta('La URL de YouTube no es válida');
+      return;
+    }
+
+    const payload: Servicio = {
+      Ubicacion: 'proyectos',
+      UrlVideo: urlNormalizada,
+      Estatus: 1
+    };
+
+    const operacion = this.servicioVideo?.CodigoServicio
+      ? this.servicioServicios.Editar({
+          ...payload,
+          CodigoServicio: this.servicioVideo.CodigoServicio
+        })
+      : this.servicioServicios.Crear(payload);
+
+    operacion.subscribe({
+      next: (resp: any) => {
+        this.videoUrl = urlNormalizada;
+        this.servicioVideo = resp?.data || this.servicioVideo;
+        this.alertaServicio.MostrarExito('Video guardado correctamente');
+      },
+      error: (error) => this.manejarError(error)
+    });
+  }
+
+  private normalizarUrlYoutube(url: string): string {
+    if (!url) return '';
+
+    try {
+      if (url.includes('youtu.be/')) {
+        const id = url.split('youtu.be/')[1].split('?')[0];
+        return `https://www.youtube.com/embed/${id}`;
+      }
+
+      if (url.includes('watch?v=')) {
+        const id = new URL(url).searchParams.get('v');
+        return id ? `https://www.youtube.com/embed/${id}` : '';
+      }
+
+      if (url.includes('/embed/')) {
+        return url.split('?')[0];
+      }
+
+      return '';
+    } catch {
+      return '';
+    }
+  }
+
+  onVideoUrlChange(valor: string): void {
+    this.videoUrl = this.normalizarUrlYoutube(valor) || valor;
   }
 }

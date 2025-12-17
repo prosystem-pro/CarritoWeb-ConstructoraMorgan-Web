@@ -1,90 +1,95 @@
-<div class="card proyecto-card h-100 shadow-sm">
-  <!-- Carrusel de imágenes -->
-  <div [id]="carouselId" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-      <ng-container *ngIf="imagenesActivas.length > 0; else sinImagenes">
-        <div class="carousel-item" 
-             *ngFor="let imagen of imagenesActivas; let i = index"
-             [class.active]="i === 0">
-          <div class="imagen-container">
-            <img [src]="imagen.UrlImagen" 
-                 class="d-block w-100 proyecto-imagen"
-                 [alt]="obtenerAltText(imagen, i)">
+<div class="card proyecto-card shadow-sm h-100">
+  <div class="image-wrapper">
+    <div [id]="carouselId" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <ng-container *ngIf="imagenesActivas.length > 0; else sinImagenes">
+          <div
+            class="carousel-item"
+            *ngFor="let imagen of imagenesActivas; let i = index"
+            [class.active]="i === 0"
+          >
+            <div class="imagen-container">
+              <img
+                [src]="imagen.UrlImagen"
+                class="d-block w-100 proyecto-imagen"
+                [alt]="obtenerAltText(imagen, i)"
+              />
+            </div>
           </div>
-        </div>
-      </ng-container>
+        </ng-container>
 
-      <!-- Fallback cuando no hay imágenes -->
-      <ng-template #sinImagenes>
-        <div class="carousel-item active">
-          <div class="imagen-container imagen-placeholder d-flex align-items-center justify-content-center">
-            <i class="bi bi-image text-muted" style="font-size: 4rem;"></i>
+        <ng-template #sinImagenes>
+          <div class="carousel-item active">
+            <div
+              class="imagen-container imagen-placeholder d-flex align-items-center justify-content-center"
+            >
+              <i class="bi bi-image text-muted" style="font-size: 4rem"></i>
+            </div>
           </div>
-        </div>
-      </ng-template>
-    </div>
+        </ng-template>
+      </div>
 
-    <!-- Controles del carrusel (solo si hay más de 1 imagen) -->
-    <button *ngIf="imagenesActivas.length > 1" 
-            class="carousel-control-prev" 
-            type="button" 
-            [attr.data-bs-target]="'#' + carouselId" 
-            data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Anterior</span>
-    </button>
-    <button *ngIf="imagenesActivas.length > 1" 
-            class="carousel-control-next" 
-            type="button" 
-            [attr.data-bs-target]="'#' + carouselId" 
-            data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Siguiente</span>
-    </button>
-
-    <!-- Indicadores -->
-    <div class="carousel-indicators" *ngIf="imagenesActivas.length > 1">
-      <button *ngFor="let imagen of imagenesActivas; let i = index"
-              type="button" 
-              [attr.data-bs-target]="'#' + carouselId" 
-              [attr.data-bs-slide-to]="i" 
-              [class.active]="i === 0"
-              [attr.aria-label]="'Slide ' + (i + 1)">
-      </button>
+      <div class="carousel-controls-custom" *ngIf="imagenesActivas.length > 1">
+        <button
+          class="control-btn prev"
+          type="button"
+          [attr.data-bs-target]="'#' + carouselId"
+          data-bs-slide="prev"
+        >
+          <i class="bi bi-arrow-left"></i>
+        </button>
+        <button
+          class="control-btn next"
+          type="button"
+          [attr.data-bs-target]="'#' + carouselId"
+          data-bs-slide="next"
+        >
+          <i class="bi bi-arrow-right"></i>
+        </button>
+      </div>
     </div>
   </div>
 
-    <!-- Información del proyecto -->
-  <div class="card-body d-flex flex-column">
-    <h5 class="card-title fw-bold mb-2 text-uppercase">{{ titulo }}</h5>
+  <div class="info-overlay-container">
+    <div class="info-card">
+      <div class="info-header">
+        <h5 class="proyecto-titulo">{{ titulo }}</h5>
+        <div class="proyecto-subtitulo" *ngIf="subtitulo">
+          {{ subtitulo }}
+        </div>
+      </div>
 
-    <div class="mb-2" *ngIf="subtitulo">
-      <span class="badge bg-danger px-3 py-2">{{ subtitulo }}</span>
-    </div>
+      <div class="info-body">
+        <div class="descripcion-content">
+          <p class="card-text text-muted small descripcion-texto">
+            {{ proyecto.Descripcion || "Sin descripción" }}
+          </p>
+        </div>
 
-    <p class="card-text text-muted small flex-grow-1 descripcion-texto">
-      {{ proyecto.Descripcion || 'Sin descripción' }}
-    </p>
-
-    <div class="mt-3 d-flex gap-2 flex-wrap" *ngIf="modoAdmin">
-      <button type="button" 
-              class="btn btn-sm btn-outline-primary flex-fill"
-              (click)="onAdministrarImagenes()"
-              title="Administrar imágenes">
-        <i class="bi bi-images"></i> Imágenes ({{ imagenesActivas.length }}/3)
-      </button>
-      <button type="button" 
-              class="btn btn-sm btn-outline-secondary"
-              (click)="onEditarProyecto()"
-              title="Editar información">
-        <i class="bi bi-pencil"></i>
-      </button>
-      <button type="button" 
-              class="btn btn-sm btn-outline-danger"
-              (click)="onEliminarProyecto()"
-              title="Eliminar proyecto">
-        <i class="bi bi-trash"></i>
-      </button>
+        <div class="mt-3 d-flex gap-2 justify-content-center" *ngIf="modoAdmin">
+          <button
+            type="button"
+            class="btn btn-sm btn-outline-primary"
+            (click)="onAdministrarImagenes()"
+          >
+            <i class="bi bi-images"></i>
+          </button>
+          <button
+            type="button"
+            class="btn btn-sm btn-outline-secondary"
+            (click)="onEditarProyecto()"
+          >
+            <i class="bi bi-pencil"></i>
+          </button>
+          <button
+            type="button"
+            class="btn btn-sm btn-outline-danger"
+            (click)="onEliminarProyecto()"
+          >
+            <i class="bi bi-trash"></i>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </div>

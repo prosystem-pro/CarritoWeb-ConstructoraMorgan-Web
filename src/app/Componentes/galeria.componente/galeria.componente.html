@@ -1,10 +1,25 @@
 <div class="container my-3 text-end" *ngIf="Permiso.TienePermiso('CarruselImagen', 'SubirImagen')">
-    <button type="button" (click)="toggleModoEdicion()" class="btn edit-main-button btn-edicion"
+    <!-- <button type="button" (click)="toggleModoEdicion()" class="btn edit-main-button btn-edicion"
         [ngClass]="{'btn-success': modoEdicion, 'btn-light': !modoEdicion}" aria-label="Alternar modo edición">
         <i class="bi" [ngClass]="{'bi-pencil-square': !modoEdicion, 'bi-check-lg': modoEdicion}"
             [style.color]="modoEdicion ? '#ffffff' : '#000000'"></i>
         <span class="ms-2">{{ modoEdicion ? 'Finalizar edición' : 'Editar galería' }}</span>
-    </button>
+    </button> -->
+        @if (Permiso.TienePermiso()) {
+      <div class="row mb-3">
+        <div class="col-12 text-end">
+          <button
+            class="btn btn-admin-toggle"
+            [class.active]="modoEdicion"
+            (click)="toggleModoEdicion()"
+            title="Modo Administrador"
+          >
+            <i class="bi bi-gear-fill"></i>
+            {{ modoEdicion ? "Salir del Modo Edición" : "Modo Edición" }}
+          </button>
+        </div>
+      </div>
+    }
 </div>
 
 <section>

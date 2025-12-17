@@ -5,15 +5,19 @@
       <div class="col-lg-3 col-md-12 mb-3 mb-lg-0">
         <h2 class="proyectos-titulo">PROYECTOS</h2>
       </div>
-      
+
       <!-- Separador vertical -->
       <div class="col-lg-auto d-none d-lg-block px-0">
         <div class="separador-vertical"></div>
       </div>
-      
+
       <!-- Descripción -->
       <div class="col-lg col-md-12">
-        <p class="proyectos-descripcion mb-0">En Morgan Style Constructora, cada proyecto es la prueba de nuestro compromiso con la excelencia. Más que edificios, construimos espacios que dan vida a las ideas y sueños de nuestros clientes.</p>
+        <p class="proyectos-descripcion mb-0">
+          En Morgan Style Constructora, cada proyecto es la prueba de nuestro
+          compromiso con la excelencia. Más que edificios, construimos espacios
+          que dan vida a las ideas y sueños de nuestros clientes.
+        </p>
       </div>
     </div>
   </div>
@@ -25,20 +29,30 @@
     <div class="row mb-4">
       <div class="col-12">
         <div class="d-flex justify-content-between align-items-center">
-          <button *ngIf="modoAdmin && Permiso.TienePermiso('Carrusel', 'Crear')" 
-                  type="button" 
-                  class="btn btn-primary"
-                  (click)="abrirModalNuevo()">
-            <i class="bi bi-plus-circle me-2"></i>Nuevo Proyecto
-          </button>
+          @if (modoAdmin && Permiso.TienePermiso('Carrusel', 'Crear')) {
+          <div class="row mb-3">
+            <div class="col-12 text-end">
+              <button
+                class="btn btn-admin-toggle"
+                (click)="abrirModalNuevo()"
+                title="Modo Administrador"
+              >
+                <i class="bi bi-plus-circle"></i>
+                Nuevo Proyecto
+              </button>
+            </div>
+          </div>
+          }
         </div>
       </div>
     </div>
 
     <!-- Grid de proyectos -->
     <div class="row g-4 mb-4">
-      <div class="col-12 col-sm-6 col-lg-4 col-xl-3" 
-           *ngFor="let proyecto of proyectosPaginados; let i = index">
+      <div
+        class="col-12 col-md-6"
+        *ngFor="let proyecto of proyectosPaginados; let i = index"
+      >
         <app-carousel-proyecto
           [proyecto]="proyecto"
           [imagenes]="obtenerImagenesProyecto(proyecto.CodigoCarrusel)"
@@ -46,7 +60,8 @@
           [modoAdmin]="modoAdmin"
           (editarProyecto)="editarProyecto($event)"
           (eliminarProyecto)="eliminarProyecto($event)"
-          (administrarImagenes)="administrarImagenes($event)">
+          (administrarImagenes)="administrarImagenes($event)"
+        >
         </app-carousel-proyecto>
       </div>
 
@@ -64,19 +79,29 @@
     <nav *ngIf="totalPaginas > 1" aria-label="Navegación de proyectos">
       <ul class="pagination justify-content-center">
         <li class="page-item" [class.disabled]="paginaActual === 1">
-          <a class="page-link" (click)="cambiarPagina(paginaActual - 1)" aria-label="Anterior">
+          <a
+            class="page-link"
+            (click)="cambiarPagina(paginaActual - 1)"
+            aria-label="Anterior"
+          >
             <span aria-hidden="true">&laquo;</span>
           </a>
         </li>
-        
-        <li class="page-item" 
-            *ngFor="let pagina of numeroPaginas"
-            [class.active]="pagina === paginaActual">
+
+        <li
+          class="page-item"
+          *ngFor="let pagina of numeroPaginas"
+          [class.active]="pagina === paginaActual"
+        >
           <a class="page-link" (click)="cambiarPagina(pagina)">{{ pagina }}</a>
         </li>
-        
+
         <li class="page-item" [class.disabled]="paginaActual === totalPaginas">
-          <a class="page-link" (click)="cambiarPagina(paginaActual + 1)" aria-label="Siguiente">
+          <a
+            class="page-link"
+            (click)="cambiarPagina(paginaActual + 1)"
+            aria-label="Siguiente"
+          >
             <span aria-hidden="true">&raquo;</span>
           </a>
         </li>
@@ -85,53 +110,142 @@
   </div>
 </section>
 
+<!-- Video de YouTube -->
+<section class="video-section py-5 bg-light" *ngIf="videoUrl || modoAdmin">
+  <!-- Vista pública -->
+  <div class="ratio ratio-16x9 mb-3" *ngIf="videoUrl">
+    <iframe
+      [src]="
+      (videoUrl +
+      '?autoplay=1&mute=1&loop=1' +
+      '&playlist=' + videoUrl.split('/embed/')[1] +
+      '&controls=0') | safeUrl
+    "
+      title="Video del proyecto"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+    >
+    </iframe>
+  </div>
+
+  <div class="container">
+    <!-- Mensaje cuando no hay video (solo admin) -->
+    <div *ngIf="!videoUrl && modoAdmin" class="alert alert-info">
+      No hay video configurado para esta sección.
+    </div>
+
+    <!-- Edición (solo admin) -->
+    <div *ngIf="modoAdmin" class="mt-4">
+      <label class="form-label fw-bold"> URL del video de YouTube </label>
+
+      <input
+        type="text"
+        class="form-control"
+        [ngModel]="videoUrl"
+        (ngModelChange)="onVideoUrlChange($event)"
+        placeholder="https://www.youtube.com/watch?v=XXXX"
+      />
+
+      <div class="mt-2 text-end">
+        @if (Permiso.TienePermiso()) {
+        <div class="row mb-3">
+          <div class="col-12 text-end">
+            <button
+              class="btn btn-admin-toggle"
+              [class.active]="servicioVideo"
+              (click)="guardarVideo()"
+              title="Modo Administrador"
+            >
+              <i class="bi bi-gear-fill"></i>
+              {{ servicioVideo ? 'Actualizar video' : 'Crear video' }}
+            </button>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Sección Proceso de construcción -->
+<section>
+  <app-carousel-proceso-construccion></app-carousel-proceso-construccion>
+</section>
+
 <!-- Modal para editar/crear proyecto -->
-<div class="modal fade" id="modalEditarProyecto" tabindex="-1" aria-labelledby="modalEditarProyectoLabel" aria-hidden="true">
+<div
+  class="modal fade"
+  id="modalEditarProyecto"
+  tabindex="-1"
+  aria-labelledby="modalEditarProyectoLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header bg-primary text-white">
         <h5 class="modal-title" id="modalEditarProyectoLabel">
-          <i class="bi me-2" [ngClass]="proyectoEnEdicion?.CodigoCarrusel ? 'bi-pencil-square' : 'bi-plus-circle'"></i>
-          {{ proyectoEnEdicion?.CodigoCarrusel ? 'Editar Proyecto' : 'Nuevo Proyecto' }}
+          <i
+            class="bi me-2"
+            [ngClass]="proyectoEnEdicion?.CodigoCarrusel ? 'bi-pencil-square' : 'bi-plus-circle'"
+          ></i>
+          {{ proyectoEnEdicion?.CodigoCarrusel ? 'Editar Proyecto' : 'Nuevo
+          Proyecto' }}
         </h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          data-bs-dismiss="modal"
+          aria-label="Cerrar"
+        ></button>
       </div>
       <div class="modal-body">
         <form>
           <div class="mb-3">
             <label for="tituloProyecto" class="form-label">Título *</label>
-            <input type="text" 
-                   class="form-control" 
-                   id="tituloProyecto" 
-                   [(ngModel)]="tituloEdicion"
-                   name="tituloEdicion"
-                   placeholder="Ej: CASTILLO SANTA ELENA"
-                   maxlength="100"
-                   required>
+            <input
+              type="text"
+              class="form-control"
+              id="tituloProyecto"
+              [(ngModel)]="tituloEdicion"
+              name="tituloEdicion"
+              placeholder="Ej: CASTILLO SANTA ELENA"
+              maxlength="100"
+              required
+            />
           </div>
-          
+
           <div class="mb-3">
-            <label for="subtituloProyecto" class="form-label">Subtítulo / Tipo</label>
-            <input type="text" 
-                   class="form-control" 
-                   id="subtituloProyecto" 
-                   [(ngModel)]="subtituloEdicion"
-                   name="subtituloEdicion"
-                   placeholder="Ej: CONSTRUCCIÓN TOTAL, REMODELACIÓN"
-                   maxlength="100">
+            <label for="subtituloProyecto" class="form-label"
+              >Subtítulo / Tipo</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="subtituloProyecto"
+              [(ngModel)]="subtituloEdicion"
+              name="subtituloEdicion"
+              placeholder="Ej: CONSTRUCCIÓN TOTAL, REMODELACIÓN"
+              maxlength="100"
+            />
             <div class="form-text">Este texto aparecerá como badge rojo</div>
           </div>
-          
+
           <div class="mb-3">
-            <label for="descripcionProyecto" class="form-label">Descripción</label>
-            <textarea class="form-control" 
-                      id="descripcionProyecto" 
-                      [(ngModel)]="descripcionEdicion"
-                      name="descripcionEdicion"
-                      rows="4"
-                      placeholder="Describe los detalles del proyecto..."
-                      maxlength="100"></textarea>
-            <div class="form-text">{{ descripcionEdicion.length }}/100 caracteres</div>
+            <label for="descripcionProyecto" class="form-label"
+              >Descripción</label
+            >
+            <textarea
+              class="form-control"
+              id="descripcionProyecto"
+              [(ngModel)]="descripcionEdicion"
+              name="descripcionEdicion"
+              rows="4"
+              placeholder="Describe los detalles del proyecto..."
+              maxlength="100"
+            ></textarea>
+            <div class="form-text">
+              {{ descripcionEdicion.length }}/100 caracteres
+            </div>
           </div>
         </form>
       </div>
@@ -139,11 +253,16 @@
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           <i class="bi bi-x-circle me-2"></i>Cancelar
         </button>
-        <button type="button" 
-                class="btn btn-primary" 
-                (click)="guardarProyecto()"
-                [disabled]="!tituloEdicion.trim() || isLoading">
-          <i class="bi" [ngClass]="isLoading ? 'bi-arrow-repeat spinner-rotate' : 'bi-check-circle'"></i>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="guardarProyecto()"
+          [disabled]="!tituloEdicion.trim() || isLoading"
+        >
+          <i
+            class="bi"
+            [ngClass]="isLoading ? 'bi-arrow-repeat spinner-rotate' : 'bi-check-circle'"
+          ></i>
           {{ isLoading ? 'Guardando...' : 'Guardar' }}
         </button>
       </div>
@@ -157,7 +276,8 @@
   [imagenesCarrusel]="imagenesProyectoSeleccionado"
   [codigoCarrusel]="proyectoSeleccionado.CodigoCarrusel || 0"
   [maxImagenes]="3"
-  (imagenesActualizadas)="actualizarImagenesProyecto($event)">
+  (imagenesActualizadas)="actualizarImagenesProyecto($event)"
+>
 </app-carousel-modal>
 
 <!-- Spinner global -->

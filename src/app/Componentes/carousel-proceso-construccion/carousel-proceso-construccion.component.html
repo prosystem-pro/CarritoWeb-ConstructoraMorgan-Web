@@ -1,0 +1,241 @@
+<section class="proceso-construccion-section">
+  <div class="container-fluid custom-container p-3 p-lg-5">
+
+    @if (Permiso.TienePermiso()) {
+      <div class="row mb-3">
+        <div class="col-12 text-end">
+          <button
+            class="btn btn-admin-toggle"
+            [class.active]="modoEdicion"
+            (click)="toggleModoEdicion()"
+            title="Modo Administrador"
+          >
+            <i class="bi bi-gear-fill"></i>
+            {{ modoEdicion ? "Salir del Modo Edición" : "Modo Edición" }}
+          </button>
+        </div>
+      </div>
+    }
+
+    @if (isLoading) {
+      <div class="row">
+        <div class="col-12 text-center py-5">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Cargando...</span>
+          </div>
+          <p class="mt-3">Cargando proceso de construcción...</p>
+        </div>
+      </div>
+    } @else if (error && !datosListos) {
+      <div class="row">
+        <div class="col-12">
+          <div class="alert alert-warning text-center" role="alert">
+            {{ errorMessage || "No se pudieron cargar los datos del carrusel" }}
+          </div>
+        </div>
+      </div>
+    } @else if (datosListos) {
+      <div class="row mb-4">
+        <div class="col-12 text-center">
+          <h2 class="section-title">PROCESO DE CONSTRUCCIÓN INICIO A FIN</h2>
+        </div>
+      </div>
+
+      <div class="row align-items-center g-4 layout-wrapper">
+
+        <div class="col-lg-4 col-xl-3 col-12 order-1 order-lg-1 mb-4 mb-lg-0">
+          <div class="static-info-box text-center text-lg-start">
+
+            @if (!editandoInfo) {
+              <h1 class="project-title">
+                {{ carruselData?.NombreCarrusel || proyecto.titulo }}
+              </h1>
+              <div class="divider d-none d-lg-block"></div>
+              <p class="project-description">{{ proyecto.descripcion }}</p>
+
+              @if (modoEdicion) {
+                <button
+                  class="btn btn-sm btn-outline-primary mt-3"
+                  (click)="activarEdicionInfo()"
+                >
+                  <i class="bi bi-pencil"></i> Editar Información
+                </button>
+              }
+            } @else {
+              <div class="edit-info-form">
+                <div class="mb-3">
+                  <label class="form-label fw-bold">Título</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="tituloTemp"
+                    placeholder="Título del proyecto"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label fw-bold">Descripción</label>
+                  <textarea
+                    class="form-control"
+                    rows="4"
+                    [(ngModel)]="descripcionTemp"
+                    placeholder="Descripción del proyecto"
+                  ></textarea>
+                </div>
+                <div class="d-flex gap-2">
+                  <button
+                    class="btn btn-sm btn-success flex-fill"
+                    (click)="guardarEdicionInfo()"
+                  >
+                    <i class="bi bi-check-lg"></i> Guardar
+                  </button>
+                  <button
+                    class="btn btn-sm btn-secondary flex-fill"
+                    (click)="cancelarEdicionInfo()"
+                  >
+                    <i class="bi bi-x-lg"></i> Cancelar
+                  </button>
+                </div>
+              </div>
+            }
+
+            <div class="dots-indicators d-flex d-lg-none justify-content-center gap-2 mt-3">
+              @for (img of proyecto.imagenes; track img.id; let i = $index) {
+                <span
+                  class="dot"
+                  [class.active]="i === activeIndex"
+                  (click)="activeIndex = i"
+                ></span>
+              }
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-8 col-xl-9 col-12 order-2 order-lg-2">
+          @if (proyecto.imagenes.length > 0) {
+            <div class="gallery-filmstrip-container">
+              @for (imagen of getImagenesRotadas(); track imagen.id; let i = $index) {
+                <div
+                  class="gallery-item"
+                  [class.featured-item]="i === 0"
+                >
+                  <div class="image-wrapper rounded-3 rounded-lg-4">
+                    <img [src]="imagen.url" [alt]="imagen.alt" />
+
+                    @if (i === 0) {
+                      <div class="nav-overlay">
+                        <button
+                          class="nav-btn prev-btn"
+                          (click)="prevSlide()"
+                          aria-label="Anterior"
+                        >
+                          ❮
+                        </button>
+                        <button
+                          class="nav-btn next-btn"
+                          (click)="nextSlide()"
+                          aria-label="Siguiente"
+                        >
+                          ❯
+                        </button>
+                      </div>
+
+                      @if (modoEdicion) {
+                        <button
+                          class="btn-eliminar-imagen"
+                          (click)="eliminarImagen(imagen.id)"
+                          title="Eliminar imagen"
+                        >
+                          <i class="bi bi-trash-fill"></i>
+                        </button>
+                      }
+                    }
+                  </div>
+                </div>
+              }
+            </div>
+
+            <div class="dots-indicators d-none d-lg-flex mt-4 justify-content-center gap-2">
+              @for (img of proyecto.imagenes; track img.id; let i = $index) {
+                <span
+                  class="dot"
+                  [class.active]="i === activeIndex"
+                  (click)="activeIndex = i"
+                ></span>
+              }
+            </div>
+          } @else {
+            <div class="alert alert-info text-center" role="alert">
+              No hay imágenes disponibles para este proyecto.
+            </div>
+          }
+
+          @if (modoEdicion) {
+            <div class="card mt-4 add-image-card">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <i class="bi bi-plus-circle"></i> Agregar Nueva Imagen
+                </h5>
+
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label for="file-upload" class="form-label">Seleccionar Imagen</label>
+                    <input
+                      type="file"
+                      class="form-control"
+                      id="file-upload"
+                      accept="image/jpeg,image/jpg,image/png,image/webp"
+                      (change)="onFileSelected($event)"
+                    />
+                    <small class="text-muted">JPG, PNG o WEBP (máx. 5MB)</small>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label class="form-label">Descripción (opcional)</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="descripcionNuevaImagen"
+                      placeholder="Descripción de la imagen"
+                    />
+                  </div>
+                </div>
+
+                @if (archivoSeleccionado) {
+                  <div class="alert alert-info mt-3 mb-0">
+                    <i class="bi bi-file-image"></i>
+                    <strong>Archivo seleccionado:</strong>
+                    {{ archivoSeleccionado.name }} ({{ (archivoSeleccionado.size / 1024 / 1024).toFixed(2) }} MB)
+                  </div>
+                }
+
+                <div class="d-flex gap-2 mt-3">
+                  <button
+                    class="btn btn-primary flex-fill"
+                    [disabled]="!archivoSeleccionado || subiendoImagen"
+                    (click)="subirNuevaImagen()"
+                  >
+                    @if (subiendoImagen) {
+                      <span class="spinner-border spinner-border-sm me-2"></span>
+                      Subiendo...
+                    } @else {
+                      <i class="bi bi-upload"></i> Subir Imagen
+                    }
+                  </button>
+
+                  @if (archivoSeleccionado) {
+                    <button
+                      class="btn btn-secondary"
+                      (click)="cancelarSubidaImagen()"
+                    >
+                      <i class="bi bi-x-lg"></i> Cancelar
+                    </button>
+                  }
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</section>

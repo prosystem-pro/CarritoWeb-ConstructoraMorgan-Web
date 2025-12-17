@@ -1,10 +1,18 @@
 <!-- Botón de edición (solo si tiene permisos) -->
-<div class="container my-3 text-end" *ngIf="Permiso.TienePermiso('CarruselImagen', 'SubirImagen')">
-    <button type="button" (click)="abrirModalEdicion()" class="btn btn-primary">
-        <i class="bi bi-pencil-square me-2"></i>
-        Administrar Imágenes
-    </button>
-</div>
+    @if (Permiso.TienePermiso('CarruselImagen', 'SubirImagen')) {
+      <div class="row mb-3">
+        <div class="col-12 text-end">
+          <button
+            class="btn btn-admin-toggle"
+            (click)="abrirModalEdicion()"
+            title="Modo Administrador"
+          >
+            <i class="bi bi-gear-fill"></i>
+            Administrar Imágenes
+          </button>
+        </div>
+      </div>
+    }
 
 <!-- Seccion carrusel -->
 <div class="flex flex-col items-center justify-center w-full p-6 bg-[#89FAD0] contenedor-carusel">
