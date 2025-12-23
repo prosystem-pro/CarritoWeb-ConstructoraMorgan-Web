@@ -1,3 +1,201 @@
+.quienes-somos-section {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.background-container {
+  width: 100%;
+  line-height: 0;
+}
+
+.bg-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 30px 20px;
+  background-color: #f4f4f4;
+}
+
+.card {
+  position: relative;
+  background: white;
+  padding: 40px 25px 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Puntos decorativos */
+.card::before,
+.card::after {
+  content: "";
+  position: absolute;
+  top: 15px;
+  width: 8px;
+  height: 8px;
+  background-color: #001a3d;
+  border-radius: 50%;
+}
+
+.card::before {
+  left: 15px;
+}
+
+.card::after {
+  right: 15px;
+}
+
+.card h2 {
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #001a3d;
+  letter-spacing: 1px;
+}
+
+.card p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* --- TABLET (768px - 991px) --- */
+@media (min-width: 768px) and (max-width: 991px) {
+  .cards-container {
+    padding: 40px 30px;
+    gap: 25px;
+  }
+
+  .card {
+    padding: 45px 35px 35px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .card h2 {
+    font-size: 1.75rem;
+  }
+
+  .card p {
+    font-size: 1.05rem;
+  }
+}
+
+/* --- PC/DESKTOP (992px en adelante) --- */
+@media (min-width: 992px) {
+  .quienes-somos-section {
+    min-height: 500px;
+  }
+
+  .background-container {
+    position: relative;
+  }
+
+  .cards-container {
+    position: absolute;
+    bottom: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    flex-direction: row;
+    background: transparent;
+    width: 90%;
+    max-width: 1200px;
+    justify-content: center;
+    gap: 40px;
+    padding: 0;
+  }
+
+  .card {
+    flex: 1;
+    max-width: 500px;
+    background: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(5px);
+    padding: 45px 35px 35px;
+  }
+
+  .card h2 {
+    font-size: 1.8rem;
+  }
+
+  .card p {
+    font-size: 1.05rem;
+  }
+}
+
+/* --- PANTALLAS GRANDES (1400px en adelante) --- */
+@media (min-width: 1400px) {
+  .cards-container {
+    max-width: 1400px;
+    gap: 50px;
+  }
+
+  .card {
+    max-width: 550px;
+    padding: 50px 40px 40px;
+  }
+
+  .card h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+
+  .card p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+  }
+}
+
+/* --- MÓVILES PEQUEÑOS (hasta 480px) --- */
+@media (max-width: 480px) {
+  .cards-container {
+    padding: 25px 15px;
+    gap: 18px;
+  }
+
+  .card {
+    padding: 35px 20px 25px;
+  }
+
+  .card h2 {
+    font-size: 1.3rem;
+  }
+
+  .card p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .card::before,
+  .card::after {
+    width: 6px;
+    height: 6px;
+    top: 12px;
+  }
+
+  .card::before {
+    left: 12px;
+  }
+
+  .card::after {
+    right: 12px;
+  }
+}
+
 .nuestros-valores-section {
     padding: 80px 0;
     background: linear-gradient(to bottom, #f8f9fa 0%, #e9ecef 100%);
