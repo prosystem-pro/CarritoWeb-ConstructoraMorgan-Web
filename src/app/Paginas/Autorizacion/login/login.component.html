@@ -14,7 +14,7 @@
     </div>
 
     <div class="col-md-6 contenedor-formulario-login">
-      <div class="contenedor-trigo-abajo">
+      <!-- <div class="contenedor-trigo-abajo">
         <img [src]="portadaLogin?.UrlImagenDecorativaIzquierda" class="trigo-abajo" alt="Trigo decorativo">
         <button *ngIf="Permiso.TienePermiso('LoginPortada', 'SubirImagen')"
           class="btn btn-sm btn-light trigo-edit-button" style="top: 0; left: 0;" title="Cambiar imagen">
@@ -24,7 +24,7 @@
           <input id="trigoIzquierdoUpload" type="file" accept="image/*"
             (change)="actualizarImagenPortadaIzquierda($event)" style="display: none;">
         </button>
-      </div>
+      </div> -->
 
       <div class="formulario-login">
         <div class="text-center mb-2">
@@ -92,7 +92,7 @@
         </form>
       </div>
 
-      <div class="contenedor-trigo-derecha">
+      <!-- <div class="contenedor-trigo-derecha">
         <img [src]="portadaLogin?.UrlImagenDecorativaDerecha" class="trigo-derecha" alt="Trigo decorativo">
         <button *ngIf="Permiso.TienePermiso('LoginPortada', 'SubirImagen')"
           class="btn btn-sm btn-light trigo-edit-button" style="top: 0; right: 0;" title="Cambiar imagen">
@@ -102,7 +102,7 @@
           <input id="trigoDerechoUpload" type="file" accept="image/*" (change)="actualizarImagenPortadaDerecha($event)"
             style="display: none;">
         </button>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>

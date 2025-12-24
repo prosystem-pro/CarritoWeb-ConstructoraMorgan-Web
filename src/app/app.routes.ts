@@ -17,6 +17,7 @@ import { SpinnerGlobalComponent } from './Componentes/spinner-global/spinner-glo
 import { Inicio } from './Paginas/Inicio/inicio/inicio';
 import { Empresa } from './Paginas/Inicio/empresa/empresa';
 import { Proyectos } from './Paginas/Inicio/proyectos/proyectos';
+import { ServiciosComponent } from './Componentes/servicios/servicios.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/inicio', pathMatch: 'full' },
@@ -30,6 +31,7 @@ export const routes: Routes = [
   { path: 'productos/buscar', component: ProductosComponent },
   { path: 'contacto', component: ContactoComponent },
   { path: 'otro', component: OtroComponent },
+  { path: 'servicio/:tipo', component: ServiciosComponent },
   { path: 'spinner-global', component: SpinnerGlobalComponent },
 
   //Rutas protegidas

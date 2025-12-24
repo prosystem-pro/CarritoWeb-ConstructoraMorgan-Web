@@ -1,0 +1,49 @@
+<div class="construccion-container">
+  <!-- Header con título y botón de regreso -->
+  <div class="page-header">
+    <button class="btn-back" routerLink="/inicio">
+      <i class="bi bi-arrow-left"></i>
+    </button>
+    <h1 class="page-title">{{ obtenerTitulo(ubicacionActual) }}</h1>
+  </div>
+
+  <!-- Sección del texto descriptivo (Fondo blanco) -->
+  <section class="description-section">
+    <div class="container">
+      <div class="description-box">
+        <p>
+          En Grupo Morgan Style Constructora, cada proyecto es la prueba de
+          nuestro compromiso con la excelencia. Más que edificios, construimos
+          espacios que dan vida a las ideas y sueños de nuestros clientes.
+        </p>
+      </div>
+    </div>
+  </section>
+
+<div style="position: relative;">
+    
+    <div class="fullscreen-image">
+      <img src="fondo-servicio.png" alt="Fondo" />
+    </div>
+
+    <section class="hero-servicio">
+      <div class="hero-grid">
+        
+        <div class="hero-text-side">
+          <h4 class="hero-subtitle">{{ contenidoServicio.titulo }}</h4>
+          <ul class="hero-list">
+            <li *ngFor="let item of contenidoServicio.items">{{ item }}</li>
+          </ul>
+          <button class="btn-cotizar">COTIZAR</button>
+        </div>
+
+        <div class="hero-image-side">
+          <div class="image-wrapper">
+            <img [src]="servicioData?.UrlImagen" alt="Imagen del servicio" />
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+</div>

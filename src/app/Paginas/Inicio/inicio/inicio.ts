@@ -191,6 +191,20 @@ export class Inicio implements OnInit {
   }
 
   abrirServicio(servicio: string): void {
-    this.router.navigate(['/servicio', servicio]);
+    console.log('Click en abrir servicios');
+    // Mapeamos los nombres del HTML a las constantes del API
+  const mapaServicios: { [key: string]: string } = {
+    'construccion': 'CONSTRUCCION',
+    'remodelacion': 'REMODELACIONES',
+    'disenos3d': 'DISENIO_3D',
+    'planificacion': 'PLANIFICACION',
+    'licencias': 'LICENCIAS_DE_CONTRUCCION',
+    'avaluos': 'AVALUOS',
+    'maquinaria': 'ALQUILER_DE_MAQUINARIA',
+    'camion': 'ALQUILER_DE_CAMINONES'
+  };
+
+  const servicioId = mapaServicios[servicio] || servicio;
+  this.router.navigate(['/servicio', servicioId]);
   }
 }
