@@ -48,25 +48,26 @@
       </ul>
 
       <!-- Redes sociales -->
-      <div class="d-flex text-white">
+      <div class="d-flex text-white gap-3 mb-3 iconos-redes">
         <i class="bi bi-facebook fs-4"></i>
-        <i class="bi bi-instagram fs-4 ms-3"></i>
-        <i class="bi bi-tiktok fs-4 ms-3"></i>
+        <i class="bi bi-instagram fs-4"></i>
+        <i class="bi bi-tiktok fs-4"></i>
       </div>
 
       <!-- Acciones -->
-      <div class="d-flex ms-3">
+      <div class="d-flex align-items-center gap-2 ms-3">
         <button class="btn btn-contacto text-white fw-bold" type="button">
           CONTACTO
         </button>
 
         <!-- Cerrar sesión -->
-        <a *ngIf="Permiso.TienePermiso('', '')"
-           class="nav-link mobile-logout-container"
-           title="Cerrar sesión"
-           (click)="cerrarSesion()">
-          Cerrar sesión <i class="bi bi-box-arrow-right"></i>
-        </a>
+        <button *ngIf="Permiso.TienePermiso('', '')"
+                class="btn btn-logout"
+                title="Cerrar sesión"
+                (click)="cerrarSesion()">
+          <span class="logout-text">Cerrar sesión</span>
+          <i class="bi bi-box-arrow-right"></i>
+        </button>
       </div>
 
     </div>
