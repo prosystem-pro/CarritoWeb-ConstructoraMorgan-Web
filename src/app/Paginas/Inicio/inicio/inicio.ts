@@ -235,6 +235,12 @@ export class Inicio implements OnInit {
       return;
     }
 
+    
+    if(this.datosContactoInicio.nombre === '' && this.datosContactoInicio.mensaje === ''){
+      this.alertaServicio.MostrarAlerta('Complete todos los campos');
+      return;
+    }
+
     const esIOS = this.isIOS() && this.isSafari();
     let nuevaVentana: Window | null = null;
 

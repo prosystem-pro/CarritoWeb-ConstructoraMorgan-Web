@@ -48,7 +48,7 @@ export class ContactoComponent implements OnInit {
     this.obtenerTelefonoEmpresa();
   }
 
-    datosContacto = {
+  datosContacto = {
     nombre: '',
     telefono: '',
     correo: '',
@@ -95,6 +95,11 @@ export class ContactoComponent implements OnInit {
   }
 
   enviarFormulario(): void {
+
+    if(this.datosContacto.nombre === '' && this.datosContacto.telefono === ''){
+      this.AlertaServicio.MostrarAlerta('Complete todos los campos obligatorios');
+      return;
+    }
 
     if (!this.numeroTelefonoEmpresa) {
       this.AlertaServicio.MostrarError(
@@ -143,6 +148,14 @@ export class ContactoComponent implements OnInit {
         'No se pudo abrir WhatsApp'
       );
     }
+
+      // Limpiar formulario
+    this.datosContacto = {
+      nombre: '',
+      telefono: '',
+      correo: '',
+      nota: ''
+    };
   }
 
 
