@@ -20,30 +20,201 @@
     </div>
   </section>
 
-<div style="position: relative;">
-    
-    <div class="fullscreen-image">
-      <img src="fondo-servicio.png" alt="Fondo" />
-    </div>
+  <div class="d-none d-lg-block">
+    <div class="container-fluid p-0">
+      <div class="row m-0 vh-50 fondo-servicio">
+        <!-- Lado izquierdo con contenido centrado -->
+        <div class="col-6 h-100 d-flex align-items-center">
+          <div class="hero-text-side">
+            <h4 class="hero-subtitle">{{ contenidoServicio.titulo }}</h4>
 
-    <section class="hero-servicio">
-      <div class="hero-grid">
-        
-        <div class="hero-text-side">
-          <h4 class="hero-subtitle">{{ contenidoServicio.titulo }}</h4>
-          <ul class="hero-list">
-            <li *ngFor="let item of contenidoServicio.items">{{ item }}</li>
-          </ul>
-          <button class="btn-cotizar">COTIZAR</button>
-        </div>
+            <ul class="hero-list">
+              <li *ngFor="let item of contenidoServicio.items">
+                {{ item }}
+              </li>
+            </ul>
 
-        <div class="hero-image-side">
-          <div class="image-wrapper">
-            <img [src]="servicioData?.UrlImagen" alt="Imagen del servicio" />
+            <button class="btn-cotizar">COTIZAR</button>
           </div>
         </div>
 
+        <div class="col-6 p-0 h-100 position-relative">
+          <!-- IMAGEN -->
+          <img
+            *ngIf="servicioData?.UrlImagen"
+            [src]="servicioData?.UrlImagen"
+            alt="Imagen del servicio"
+            class="w-100 h-100 object-fit-cover"
+          />
+
+          <!-- MENSAJE CUANDO NO HAY IMAGEN -->
+          <div
+            *ngIf="!servicioData?.UrlImagen"
+            class="h-100 d-flex align-items-center justify-content-center bg-light text-muted"
+          >
+            No hay imagen configurada
+          </div>
+
+          <!-- BOTONES ADMIN -->
+          <div
+            *ngIf="modoAdmin"
+            class="position-absolute top-0 end-0 m-3 d-flex gap-2"
+          >
+            <button
+              class="btn btn-sm btn-dark"
+              (click)="fileInput.click()"
+              title="Subir / cambiar imagen"
+            >
+              <i class="bi bi-upload"></i>
+            </button>
+
+            <button
+              *ngIf="servicioData?.UrlImagen"
+              class="btn btn-sm btn-danger"
+              (click)="eliminarImagenServicio()"
+              title="Eliminar imagen"
+            >
+              <i class="bi bi-trash"></i>
+            </button>
+          </div>
+
+          <!-- INPUT FILE OCULTO -->
+          <input
+            #fileInput
+            type="file"
+            class="d-none"
+            accept="image/jpeg,image/png,image/webp"
+            (change)="onImagenSeleccionada($event)"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- ================= MÓVIL ================= -->
+  <div class="d-block d-lg-none">
+    <section
+      class="fondo-servicio-movil d-flex align-items-center justify-content-center"
+    >
+      <div class="text-center px-3">
+        <h4 class="hero-subtitle text-white mb-3">
+          {{ contenidoServicio.titulo }}
+        </h4>
+
+        <ul class="hero-list list-unstyled text-warning mb-0">
+          <li *ngFor="let item of contenidoServicio.items">
+            {{ item }}
+          </li>
+        </ul>
       </div>
     </section>
+
+    <section class="bg-white">
+      <div class="container px-3">
+        <div class="movil-imagen-card position-relative">
+          <!-- IMAGEN -->
+          <img
+            *ngIf="servicioData?.UrlImagen"
+            [src]="servicioData?.UrlImagen"
+            alt="Imagen del servicio"
+            class="w-100 rounded-4 object-fit-cover"
+          />
+
+          <!-- MENSAJE CUANDO NO HAY IMAGEN -->
+          <div
+            *ngIf="!servicioData?.UrlImagen"
+            class="text-center text-muted py-5"
+          >
+            No hay imagen configurada
+          </div>
+
+          <!-- BOTONES ADMIN MÓVIL -->
+          <div
+            *ngIf="modoAdmin"
+            class="position-absolute top-0 end-0 m-3 d-flex gap-2"
+          >
+            <button
+              class="btn btn-sm btn-dark"
+              (click)="fileInputMovil.click()"
+              title="Subir / cambiar imagen"
+            >
+              <i class="bi bi-upload"></i>
+            </button>
+
+            <button
+              *ngIf="servicioData?.UrlImagen"
+              class="btn btn-sm btn-danger"
+              (click)="eliminarImagenServicio()"
+              title="Eliminar imagen"
+            >
+              <i class="bi bi-trash"></i>
+            </button>
+          </div>
+
+          <!-- INPUT FILE OCULTO MÓVIL -->
+          <input
+            #fileInputMovil
+            type="file"
+            class="d-none"
+            accept="image/jpeg,image/png,image/webp"
+            (change)="onImagenSeleccionada($event)"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-white text-center pb-4">
+      <button class="btn btn-cotizar px-5">COTIZAR</button>
+    </section>
   </div>
+
+  <!-- Video de YouTube -->
+  <section class="video-section py-2 bg-light" *ngIf="modoAdmin || videoUrl">
+    <!-- PREVIEW DEL VIDEO (usa lo que el admin escribe) -->
+    <div class="ratio ratio-16x9 mb-4" *ngIf="videoUrl">
+      <iframe
+        [src]="
+          videoUrl +
+            '?autoplay=1&mute=1&loop=1' +
+            '&playlist=' +
+            videoUrl.split('/embed/')[1] +
+            '&controls=0' | safeUrl
+        "
+        title="Video del servicio"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      >
+      </iframe>
+    </div>
+
+    <div class="container">
+      <!-- EDICIÓN (SOLO ADMIN) -->
+      <div *ngIf="modoAdmin" class="mt-3">
+        <label class="form-label fw-bold"> URL del video de YouTube </label>
+
+        <input
+          type="text"
+          class="form-control"
+          placeholder="https://www.youtube.com/watch?v=XXXX"
+          [ngModel]="videoUrl"
+          (ngModelChange)="onVideoUrlChange($event)"
+        />
+
+        <div class="mt-3 text-end">
+          <button
+            class="btn btn-admin-toggle"
+            (click)="guardarVideo()"
+            [disabled]="!videoUrl"
+          >
+            <i class="bi bi-gear-fill me-1"></i>
+            {{ servicioData?.UrlVideo ? "Actualizar video" : "Guardar video" }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>
+
+<app-spinner-global
+  [visible]="isLoading || subiendoImagen"
+></app-spinner-global>

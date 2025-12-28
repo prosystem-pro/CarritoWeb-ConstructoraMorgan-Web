@@ -8,6 +8,7 @@ import { PermisoServicio } from '../../Autorizacion/AutorizacionPermiso';
 import { AlertaServicio } from '../../Servicios/Alerta-Servicio';
 import { SafeUrlPipe } from '../../Servicios/SafePipe';
 import { SpinnerGlobalComponent } from '../spinner-global/spinner-global.component';
+import { Entorno } from '../../Entornos/Entorno';
 
 @Component({
   selector: 'app-servicios',
@@ -22,6 +23,7 @@ import { SpinnerGlobalComponent } from '../spinner-global/spinner-global.compone
   styleUrl: './servicios.component.css',
 })
 export class ServiciosComponent implements OnInit {
+  private readonly NombreEmpresa = `${Entorno.NombreEmpresa}`;
   // Configuración de ubicaciones requeridas
   readonly UBICACIONES_REQUERIDAS = [
     'CONSTRUCCION',
@@ -111,6 +113,9 @@ export class ServiciosComponent implements OnInit {
   isLoading = false;
   modoAdmin = false;
   ubicacionActual: string = '';
+  imagenSeleccionada: File | null = null;
+  subiendoImagen = false;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -121,7 +126,7 @@ export class ServiciosComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.modoAdmin = this.Permiso.TienePermiso('Servicios', 'Editar');
+    this.modoAdmin = this.Permiso.TienePermiso('Servicio', 'Editar');
     this.route.params.subscribe((params) => {
       this.ubicacionActual = params['tipo'];
       this.inicializarServicios();
@@ -210,7 +215,7 @@ export class ServiciosComponent implements OnInit {
   }
 
   onVideoUrlChange(valor: string): void {
-    this.videoUrl = valor;
+    this.videoUrl = this.normalizarUrlYoutube(valor) || valor;
   }
 
   obtenerTitulo(ubicacion: string): string {
@@ -233,4 +238,120 @@ export class ServiciosComponent implements OnInit {
       items: []
     };
   }
+
+  guardarVideo(): void {
+    if (!this.modoAdmin || !this.servicioData?.CodigoServicio) return;
+
+    const urlNormalizada = this.normalizarUrlYoutube(this.videoUrl);
+
+    if (!urlNormalizada) {
+      this.alertaServicio.MostrarAlerta('La URL de YouTube no es válida');
+      return;
+    }
+
+    const payload: Partial<Servicio> = {
+      CodigoServicio: this.servicioData.CodigoServicio,
+      UrlVideo: urlNormalizada
+    };
+
+    this.isLoading = true;
+
+    this.servicioServicios.Editar(payload as Servicio).subscribe({
+      next: () => {
+        this.servicioData!.UrlVideo = urlNormalizada;
+        this.videoUrl = urlNormalizada;
+        this.alertaServicio.MostrarExito('Video guardado correctamente');
+        this.isLoading = false;
+      },
+      error: () => {
+        this.isLoading = false;
+        this.alertaServicio.MostrarError('Error al guardar el video');
+      },
+    });
+  }
+
+  onImagenSeleccionada(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (!input.files || input.files.length === 0) return;
+
+    const archivo = input.files[0];
+
+    const tiposPermitidos = ['image/jpeg', 'image/png', 'image/webp'];
+    if (!tiposPermitidos.includes(archivo.type)) {
+      this.alertaServicio.MostrarAlerta(
+        'Solo se permiten imágenes JPG, PNG o WEBP'
+      );
+      return;
+    }
+
+    const maxSize = 5 * 1024 * 1024;
+    if (archivo.size > maxSize) {
+      this.alertaServicio.MostrarAlerta(
+        'La imagen no debe superar los 5MB'
+      );
+      return;
+    }
+
+    this.imagenSeleccionada = archivo;
+    this.subirImagenServicio();
+  }
+
+  subirImagenServicio(): void {
+    if (!this.imagenSeleccionada || !this.servicioData?.CodigoServicio) return;
+
+    const formData = new FormData();
+    formData.append('Imagen', this.imagenSeleccionada);
+    formData.append('CarpetaPrincipal', this.NombreEmpresa);
+    formData.append('SubCarpeta', 'Servicio');
+    formData.append(
+      'CodigoPropio',
+      this.servicioData.CodigoServicio.toString()
+    );
+    formData.append('CampoPropio', 'CodigoServicio');
+    formData.append('CodigoVinculado', '');
+    formData.append('CampoVinculado', '');
+    formData.append('NombreCampoImagen', 'UrlImagen');
+
+    this.subiendoImagen = true;
+
+    this.servicioServicios.SubirImagen(formData).subscribe({
+      next: (resp: any) => {
+        this.alertaServicio.MostrarExito('Imagen actualizada correctamente');
+
+        if (resp?.data?.UrlImagenPublica) {
+          this.servicioData!.UrlImagen = resp.data.UrlImagenPublica;
+        }
+
+        this.imagenSeleccionada = null;
+        this.subiendoImagen = false;
+      },
+      error: () => {
+        this.subiendoImagen = false;
+        this.alertaServicio.MostrarError('Error al subir la imagen');
+      },
+    });
+  }
+
+  eliminarImagenServicio(): void {
+    if (!this.servicioData) return;
+
+    if (!confirm('¿Desea eliminar la imagen del servicio?')) return;
+
+    const payload: Servicio = {
+      ...this.servicioData,
+      UrlImagen: '',
+      Estatus: 1,
+    };
+
+    this.servicioServicios.Editar(payload).subscribe({
+      next: () => {
+        this.servicioData!.UrlImagen = '';
+        this.alertaServicio.MostrarExito('Imagen eliminada');
+      },
+      error: () => {
+        this.alertaServicio.MostrarError('Error al eliminar la imagen');
+      },
+    });
+  }
+
 }
