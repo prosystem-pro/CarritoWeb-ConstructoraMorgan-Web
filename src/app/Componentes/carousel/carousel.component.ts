@@ -41,7 +41,6 @@ export class CarouselComponent {
   constructor(public Permiso: PermisoServicio) {}
 
   ngOnInit(): void {
-    console.log("ItemsInput desde carrusel: ", this.itemsInput);
     if (this.itemsInput && this.itemsInput.length > 0) {
       this.items.set(this.itemsInput);
     }

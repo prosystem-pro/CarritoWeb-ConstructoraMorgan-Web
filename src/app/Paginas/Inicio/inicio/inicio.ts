@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { GaleriaComponente } from '../../../Componentes/galeria.componente/galeria.componente';
 import { CarruselServicio } from '../../../Servicios/CarruselServicio';
@@ -13,7 +15,7 @@ import { Carrusel } from '../../../Modelos/Carrusel';
 @Component({
   selector: 'app-inicio',
   standalone: true,
-  imports: [GaleriaComponente, CommonModule],
+  imports: [GaleriaComponente, CommonModule, FormsModule],
   templateUrl: './inicio.html',
   styleUrl: './inicio.css'
 })
@@ -31,6 +33,13 @@ export class Inicio implements OnInit {
   error = false;
   codigoEmpresa: number | null = null;
   errorMessage: string = '';
+
+  datosContactoInicio = {
+    nombre: '',
+    mensaje: ''
+  };
+
+  telefonoEmpresa: string = '';
 
   private NombreEmpresa = `${Entorno.NombreEmpresa}`;
 
@@ -52,15 +61,16 @@ export class Inicio implements OnInit {
 
   private async obtenerCodigoEmpresa(): Promise<void> {
     try {
-      const empresa = await this.EmpresaServicio.ConseguirPrimeraEmpresa().toPromise();
-      if (empresa && empresa.CodigoEmpresa) {
-        this.codigoEmpresa = empresa.CodigoEmpresa;
-      } else {
-        console.warn('No se encontró información de empresa');
-        this.alertaServicio.MostrarError('No se pudo obtener la información de la empresa');
+      const empresa = await firstValueFrom(
+        this.EmpresaServicio.ConseguirPrimeraEmpresa()
+      );
+
+      if (empresa) {
+        this.codigoEmpresa = empresa.CodigoEmpresa ?? null;
+        this.telefonoEmpresa = empresa.Celular ?? '';
       }
     } catch (error) {
-      console.error('Error al obtener código de empresa:', error);
+      console.error('Error empresa:', error);
       this.alertaServicio.MostrarError('Error al cargar información de empresa');
     }
   }
@@ -191,20 +201,66 @@ export class Inicio implements OnInit {
   }
 
   abrirServicio(servicio: string): void {
-    console.log('Click en abrir servicios');
     // Mapeamos los nombres del HTML a las constantes del API
-  const mapaServicios: { [key: string]: string } = {
-    'construccion': 'CONSTRUCCION',
-    'remodelacion': 'REMODELACIONES',
-    'disenos3d': 'DISENIO_3D',
-    'planificacion': 'PLANIFICACION',
-    'licencias': 'LICENCIAS_DE_CONTRUCCION',
-    'avaluos': 'AVALUOS',
-    'maquinaria': 'ALQUILER_DE_MAQUINARIA',
-    'camion': 'ALQUILER_DE_CAMINONES'
-  };
+    const mapaServicios: { [key: string]: string } = {
+      'construccion': 'CONSTRUCCION',
+      'remodelacion': 'REMODELACIONES',
+      'disenos3d': 'DISENIO_3D',
+      'planificacion': 'PLANIFICACION',
+      'licencias': 'LICENCIAS_DE_CONTRUCCION',
+      'avaluos': 'AVALUOS',
+      'maquinaria': 'ALQUILER_DE_MAQUINARIA',
+      'camion': 'ALQUILER_DE_CAMINONES'
+    };
 
-  const servicioId = mapaServicios[servicio] || servicio;
-  this.router.navigate(['/servicio', servicioId]);
+    const servicioId = mapaServicios[servicio] || servicio;
+    this.router.navigate(['/servicio', servicioId]);
+  }
+
+  isIOS(): boolean {
+    return /iPad|iPhone|iPod/.test(navigator.userAgent);
+  }
+
+  isSafari(): boolean {
+    return /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+  }
+
+  isAndroid(): boolean {
+    return /android/i.test(navigator.userAgent);
+  }
+
+  enviarFormularioInicio(): void {
+    if (!this.telefonoEmpresa) {
+      this.alertaServicio.MostrarAlerta('No hay número de contacto disponible');
+      return;
+    }
+
+    const esIOS = this.isIOS() && this.isSafari();
+    let nuevaVentana: Window | null = null;
+
+    if (esIOS) {
+      nuevaVentana = window.open('', '_blank');
+      if (!nuevaVentana) {
+        console.error('Popup bloqueado');
+        return;
+      }
+    }
+
+    const mensaje =
+      `*Nuevo contacto desde la web – Solicitud de información de servicios*\n\n` +
+      `*Nombre:* ${this.datosContactoInicio.nombre}\n` +
+      `*Mensaje:* ${this.datosContactoInicio.mensaje}`;
+
+    const mensajeCodificado = encodeURIComponent(mensaje);
+    const url = `https://wa.me/${this.telefonoEmpresa}?text=${mensajeCodificado}`;
+
+    if (esIOS && nuevaVentana) {
+      nuevaVentana.location.href = url;
+    } else {
+      window.open(url, '_blank');
+    }
+
+    // Limpiar formulario
+    this.datosContactoInicio = { nombre: '', mensaje: '' };
   }
 }

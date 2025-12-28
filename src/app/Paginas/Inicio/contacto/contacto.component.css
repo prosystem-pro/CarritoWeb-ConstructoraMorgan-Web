@@ -1,321 +1,381 @@
-.inactivo {
-  pointer-events: none;
-  opacity: 0.6;
+.contacto-container {
+  font-family: 'Arial', sans-serif;
+  color: #333;
 }
 
-.toggle-red-social {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 40px;
-  height: 20px;
-  background-color: #222;
-  border-radius: 20px;
+/* Sección Hero con fondo de construcción */
+.hero-section {
+  background: url('../../../../../public/fondoContacto.png') no-repeat center center;
+  background-size: cover;
   position: relative;
-  cursor: pointer;
-  outline: none;
-  transition: background-color 0.3s ease;
+  padding: 40px 20px;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
 }
 
-.toggle-red-social:checked {
-  background-color: #2ecc71;
-}
-
-.toggle-red-social::before {
-  content: "";
+.hero-section::before {
+  content: '';
   position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 16px;
-  height: 16px;
-  background: white;
-  border-radius: 50%;
-  transition: transform 0.1s ease;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.1);
 }
 
-.toggle-red-social:checked::before {
-  transform: translateX(20px);
+.overlay {
+  display: flex;
+  justify-content:center;
+  align-items: stretch;
+  gap: 30px;
+  max-width: 1400px;
+  margin: auto;
+  position: relative;
+  z-index: 1;
+  width: 100%;
 }
 
-
-.toggle-red-social.activo {
-  accent-color: #2ecc71;
-  /* Verde limón cuando está activo */
+/* Brand Info - Lado Izquierdo */
+.brand-info {
+  background-color: rgba(255, 255, 255, 0.70);
+  backdrop-filter: blur(5px);
+  color: #000;
+  text-align: center;
+  padding: 40px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 0 0 350px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
-@media (min-width: 1105px) {
-  .InputNombreContactanosPortada {
-    width: 100%;
-    max-width: 300px;
-    border-radius: 50%;
-    border: 1px solid #ccc;
+.logo {
+  width: 180px;
+  max-width: 80%;
+  margin-bottom: 30px;
+}
+
+.slogan {
+  font-size: 2.8rem;
+  line-height: 1.1;
+  margin: 0 0 15px 0;
+  font-weight: 700;
+  letter-spacing: -1px;
+}
+
+.slogan strong {
+  font-weight: 900;
+  display: block;
+}
+
+.sub-slogan {
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-top: 10px;
+  color: #555;
+}
+
+/* Tarjeta del Formulario */
+.contact-form-card {
+  background: rgba(255, 255, 255, 0.70);
+  backdrop-filter: blur(10px);
+  padding: 40px;
+  flex: 1;
+  max-width: 750px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+}
+
+.contact-form-card h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+.form-group label span {
+  color: #e74c3c;
+}
+
+.form-group input, 
+.form-group textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  transition: border-color 0.3s;
+  box-sizing: border-box;
+}
+
+.form-group input:focus, 
+.form-group textarea:focus {
+  outline: none;
+  border-color: #f39c12;
+  box-shadow: 0 0 0 3px rgba(243, 156, 18, 0.1);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #aaa;
+}
+
+.form-group textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.btn-enviar {
+  background-color: #f39c12;
+  color: white;
+  border: none;
+  padding: 14px 20px;
+  width: 100%;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.3s;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.btn-enviar:hover {
+  background-color: #e67e22;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
+}
+
+/* Banner - Vista Desktop */
+.full-country-banner {
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  display: flex;
+  justify-content: flex-end;
+  background-color: #f5f5f5;
+}
+
+.full-country-banner img {
+  width: 80%; /* 80% en desktop */
+  height: auto;
+  display: block;
+  object-fit: cover;
+  object-position: right center;
+}
+
+/* Sección de Información y Mapa */
+.info-section {
+  padding: 60px 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.map-container {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.map-container iframe {
+  display: block;
+  width: 100%;
+  height: 350px;
+}
+
+.details-container h3 {
+  font-size: 2rem;
+  font-weight: 900;
+  margin-bottom: 20px;
+}
+
+.details-container p {
+  margin-bottom: 15px;
+  line-height: 1.6;
+  color: #555;
+}
+
+.horarios {
+  margin: 25px 0;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.horarios strong {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+  color: #000;
+}
+
+.horarios p {
+  margin: 5px 0;
+  color: #666;
+}
+
+.btn-como-llegar {
+  background-color: #f39c12;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 25px;
+  cursor: pointer;
+  margin-top: 20px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition: all 0.3s;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-como-llegar:hover {
+  background-color: #e67e22;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .overlay {
+    gap: 20px;
+  }
+  
+  .brand-info {
+    flex: 0 0 300px;
+    padding: 30px 20px;
+  }
+  
+  .slogan {
+    font-size: 2.3rem;
   }
 
-  .EstiloColor {
-    position: relative;
-    top: -5px;
-  }
-
-  .BotonesExtras {
-    margin-top: -10px;
-  }
-
-  .ContornoFondoTitulo {
-    width: 67%;
-    height: 100%;
-  }
-
-  .ContornoFondoRedesSociales {
-    width: 39%;
-    height: 100%;
-  }
-
-  .ContornoFondoRedesSocialesNuevo {
-    width: 45%;
-    height: 100%;
-  }
-
-  .ContenidoRedesSociales {
-    margin-left: 34%;
-  }
-
-  .TamañoContenidoRedesSociales {
-    width: 100%;
-    height: 100%
-  }
-
-  .FondoPantalla {
-    height: 100%;
-    position: relative;
-  }
-
-  .MedidaImagenHorario {
-    height: 720px;
-    width: 100%;
-    background-size: 100% 100%;
-
+  /* Banner en tablets grandes */
+  .full-country-banner img {
+    width: 85%;
   }
 }
 
-/* Tablet */
-@media (min-width: 768px) and (max-width: 1204px) {
-  .InputNombreContactanosPortada {
-    width: 30%;
-    border-radius: 50%;
-    border: 1px solid #ccc;
+@media (max-width: 992px) {
+  .overlay {
+    flex-direction: column;
+    align-items: center;
   }
-
-  .EstiloColor {
-    position: relative;
-    top: -5px;
-  }
-
-  .ContornoFondoTitulo {
-    width: 80%;
-    height: 100%;
-  }
-
-  .ContornoFondoRedesSociales {
-    width: 49%;
-    height: 100%;
-  }
-
-  .ContornoFondoRedesSocialesNuevo {
-    width: 55%;
-    height: 100%;
-  }
-
-  .ContenidoRedesSociales {
-    margin-left: 27%;
-  }
-
-  .TamañoContenidoRedesSociales {
+  
+  .brand-info {
+    flex: 1;
     width: 100%;
-    height: 100%
+    max-width: 600px;
+    padding: 40px 30px;
   }
-
-  .FondoPantalla {
-    height: 65%;
-    position: relative;
-  }
-
-  .MedidaImagenHorario {
-    height: 500px;
+  
+  .contact-form-card {
     width: 100%;
-    background-size: 100% 100%;
-
+    max-width: 600px;
   }
-}
-
-/* Celular tamaños normales */
-@media (min-width: 500px) and (max-width: 767px) {
-  .InputNombreContactanosPortada {
-    width: 60%;
-    border-radius: 50%;
-    border: 1px solid #ccc;
+  
+  .slogan {
+    font-size: 2.5rem;
   }
-
-  .EstiloColor {
-    position: relative;
-    top: -1px;
+  
+  .info-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
   }
 
-  .ContornoFondoTitulo {
-    width: 80%;
-    height: 100%;
-  }
-
-  .BotonesExtras {
-    margin-top: -1%;
-  }
-
-  .ContornoFondoRedesSociales {
-    width: 74%;
-    height: 100%;
-  }
-
-  .ContornoFondoRedesSocialesNuevo {
-    width: 80%;
-    height: 100%;
-  }
-
-  .ContenidoRedesSociales {
-    margin-left: 20%;
-  }
-
-  .TamañoContenidoRedesSociales {
-    width: 100%;
-    height: 100%
-  }
-
-  .FondoPantalla {
-    height: 100vh;
-    position: relative;
-  }
-
-  .MedidaImagenHorario {
-    height: 450px;
-    width: 100%;
-    background-size: 100% 100%;
-
-  }
-}
-
-/* Celular pequeños */
-@media (min-width: 321px) and (max-width: 490px) {
-  .InputNombreContactanosPortada {
-    width: 60%;
-    border-radius: 50%;
-    border: 1px solid #ccc;
-  }
-
-  .EstiloColor {
-    position: relative;
-    top: -1px;
-  }
-
-  .ContornoFondoTitulo {
-    width: 80%;
-    height: 100%;
-  }
-
-  .BotonesExtras {
-    margin-top: -1%;
-  }
-
-  .ContornoFondoRedesSociales {
-    width: 74%;
-    height: 100%;
-  }
-
-  .ContornoFondoRedesSocialesNuevo {
-    width: 80%;
-    height: 100%;
-  }
-
-  .ContenidoRedesSociales {
-    margin-left: 15%;
-  }
-
-  .TamañoContenidoRedesSociales {
-    width: 100%;
-    height: 100%
-  }
-
-  .FondoPantalla {
-    height: 100vh;
-    position: relative;
-  }
-
-  .MedidaImagenHorario {
-    height: 400px;
-    width: 100%;
-    background-size: 100% 100%;
-
-  }
-}
-
-/* Celular muy pequeños */
-@media (max-width: 320px) {
-  .InputNombreContactanosPortada {
-    width: 60%;
-    border-radius: 50%;
-    border: 1px solid #ccc;
-  }
-
-  .EstiloColor {
-    position: relative;
-    top: -1px;
-  }
-
-  .ContornoFondoTitulo {
+  /* Banner en tablets */
+  .full-country-banner img {
     width: 90%;
-    height: 80%;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 30px 15px;
+    min-height: auto;
+  }
+  
+  .brand-info {
+    padding: 30px 20px;
+  }
+  
+  .slogan {
+    font-size: 2rem;
+  }
+  
+  .contact-form-card {
+    padding: 30px 20px;
+  }
+  
+  .contact-form-card h2 {
+    font-size: 1.6rem;
   }
 
-  .BotonesExtras {
-    margin-top: -1%;
+  /* Banner en móviles */
+  .full-country-banner img {
+    width: 95%;
+    object-fit: cover;
+    object-position: right center;
+  }
+  
+  .info-section {
+    padding: 40px 15px;
+  }
+  
+  .details-container h3 {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .slogan {
+    font-size: 1.7rem;
+  }
+  
+  .logo {
+    width: 150px;
+  }
+  
+  .contact-form-card {
+    padding: 25px 15px;
   }
 
-  .ContornoFondoRedesSociales {
-    width: 84%;
-    height: 50px;
+  /* Banner en móviles pequeños */
+  .full-country-banner img {
+    width: 98%;
   }
-
-  .ContornoFondoRedesSocialesNuevo {
-    width: 90%;
-    height: 100%;
+  
+  .btn-enviar,
+  .btn-como-llegar {
+    padding: 12px 20px;
+    font-size: 0.9rem;
   }
+}
 
-  .ContenidoRedesSociales {
-    margin-left: 9%;
-  }
-
-  .TamañoImagenRedSocial {
-    width: 70%;
-    height: 30px;
-  }
-
-  .TamañoLetraRedSocial {
-    margin-left: -18px;
-  }
-
-  .FondoPantalla {
-    height: 75vh;
-    position: relative;
-  }
-
-  .TextoComoLlegar {
-    font-size: 10px
-  }
-
-  .DiseñoMapa {
-    width: 200px;
-  }
-
-  .MedidaImagenHorario {
-    height: 300px;
+/* Breakpoint adicional para móviles muy pequeños */
+@media (max-width: 360px) {
+  .full-country-banner img {
     width: 100%;
-    background-size: 100% 100%;
-
   }
 }

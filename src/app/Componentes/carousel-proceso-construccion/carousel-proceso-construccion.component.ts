@@ -217,31 +217,41 @@ export class CarouselProcesoConstruccionComponent implements OnInit {
   }
 
   eliminarImagen(codigoImagen: number): void {
-    if (!confirm('¿Está seguro de eliminar esta imagen del proceso de construcción?')) {
-      return;
-    }
+    this.alertaServicio
+      .Confirmacion(
+        '¿Está seguro de eliminar esta imagen del proceso de construcción?',
+        'Esta acción no se puede deshacer.'
+      )
+      .then((confirmado) => {
+        if (!confirmado) return;
 
-    this.carruselImagenServicio.Eliminar(codigoImagen).subscribe({
-      next: (response) => {
-        this.alertaServicio.MostrarExito('Imagen eliminada correctamente');
-        
-        const cantidadImagenesActual = this.proyecto.imagenes.length;
-        if (cantidadImagenesActual > 0) {
-          if (this.activeIndex >= cantidadImagenesActual - 1) {
-            this.activeIndex = Math.max(0, cantidadImagenesActual - 2);
-          }
-        } else {
-          this.activeIndex = 0;
-        }
-        
-        this.cargarImagenesCarrusel();
-      },
-      error: (error) => {
-        const mensaje = error?.error?.message || error?.error?.error?.message || 'Error al eliminar la imagen';
-        this.alertaServicio.MostrarError(mensaje);
-        console.error('Error al eliminar imagen:', error);
-      }
-    });
+        this.carruselImagenServicio.Eliminar(codigoImagen).subscribe({
+          next: () => {
+            this.alertaServicio.MostrarExito('Imagen eliminada correctamente');
+
+            const cantidadImagenesActual = this.proyecto.imagenes.length;
+
+            if (cantidadImagenesActual > 0) {
+              if (this.activeIndex >= cantidadImagenesActual - 1) {
+                this.activeIndex = Math.max(0, cantidadImagenesActual - 2);
+              }
+            } else {
+              this.activeIndex = 0;
+            }
+
+            this.cargarImagenesCarrusel();
+          },
+          error: (error) => {
+            const mensaje =
+              error?.error?.message ||
+              error?.error?.error?.message ||
+              'Error al eliminar la imagen';
+
+            this.alertaServicio.MostrarError(mensaje);
+            console.error('Error al eliminar imagen:', error);
+          },
+        });
+      });
   }
 
   agregarImagen(archivo: File, descripcion: string = ''): void {

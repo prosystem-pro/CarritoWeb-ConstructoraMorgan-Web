@@ -1,359 +1,588 @@
 <div class="position-relative container-fluid p-0">
-    <!-- Imagen de fondo -->
-    <img src="BannerInicio.png" alt="Logo Grupo Morgan" class="img-banner-ajustable">
+  <!-- Imagen de fondo -->
+  <img
+    src="BannerInicio.png"
+    alt="Logo Grupo Morgan"
+    class="img-banner-ajustable"
+  />
 
-    <!-- Capa oscura encima -->
-    <div class="position-absolute top-0 start-0 w-100 h-100" style="background-color: rgba(0, 0, 0, 0.4);"></div>
+  <!-- Capa oscura encima -->
+  <div
+    class="position-absolute top-0 start-0 w-100 h-100"
+    style="background-color: rgba(0, 0, 0, 0.4)"
+  ></div>
 
-    <!-- Contenido encima -->
-    <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center">
-        <div class="container">
-            <div class="row align-items-center">
-                <!-- Columna izquierda: Textos -->
-                <div class="col-lg-4 text-white d-flex flex-column justify-content-center text-center">
-                    <div>
-                        <h2 class="fw-bold mb-0 texto-disenio" style="font-size: 3.5rem;">DISEÑANDO EL</h2>
-                        <h1 class="fw-bold texto-futuro" style="font-size: 6rem; color: #FF9800; line-height: 1;">FUTURO
-                        </h1>
-                    </div>
+  <!-- Contenido encima -->
+  <div
+    class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center"
+  >
+    <div class="container">
+      <div class="row align-items-center">
+        <!-- Columna izquierda: Textos -->
+        <div
+          class="col-lg-4 text-white d-flex flex-column justify-content-center text-center"
+        >
+          <div>
+            <h2 class="fw-bold mb-0 texto-disenio" style="font-size: 3.5rem">
+              DISEÑANDO EL
+            </h2>
+            <h1
+              class="fw-bold texto-futuro"
+              style="font-size: 6rem; color: #ff9800; line-height: 1"
+            >
+              FUTURO
+            </h1>
+          </div>
 
-                    <div class="mt-4">
-                        <h2 class="fw-bold mb-2 texto-soluciones" style="font-size: 3.5rem;">SOLUCIONES</h2>
-                        <h3 class="fw-normal texto-arq-ing linea-debajo" style="font-size: 2.2rem; color: #FFD700;">
-                            ARQUITECTURA<br>E INGENIERÍA
-                        </h3>
-                    </div>
-                </div>
-            </div>
+          <div class="mt-4">
+            <h2 class="fw-bold mb-2 texto-soluciones" style="font-size: 3.5rem">
+              SOLUCIONES
+            </h2>
+            <h3
+              class="fw-normal texto-arq-ing linea-debajo"
+              style="font-size: 2.2rem; color: #ffd700"
+            >
+              ARQUITECTURA<br />E INGENIERÍA
+            </h3>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 
-    <!-- Formulario superpuesto (desktop) -->
-    <div class="formulario-contacto position-absolute d-none d-lg-block" style="bottom: -7%; right: 5%; width: 35rem;">
-        <div class="p-4 rounded-1 shadow" style="background-color: #FF9800;">
-            <div class="d-flex align-items-center mb-4">
-                <i class="bi bi-file-earmark-text me-2" style="font-size: 1.8rem; color: white;"></i>
-                <h3 class="fw-bold mb-0 text-white" style="font-size: 1.8rem;">CONTACTAR</h3>
-            </div>
+  <!-- Formulario superpuesto (desktop) -->
+  <div
+    class="formulario-contacto position-absolute d-none d-lg-block"
+    style="bottom: -7%; right: 5%; width: 35rem"
+  >
+    <div class="p-4 rounded-1 shadow" style="background-color: #ff9800">
+      <div class="d-flex align-items-center mb-4">
+        <i
+          class="bi bi-file-earmark-text me-2"
+          style="font-size: 1.8rem; color: white"
+        ></i>
+        <h3 class="fw-bold mb-0 text-white" style="font-size: 1.8rem">
+          CONTACTAR
+        </h3>
+      </div>
 
-            <form>
-                <div class="mb-3">
-                    <input type="text" class="form-control form-control-lg" placeholder="Nombre"
-                        style="border: none; padding: 15px;">
-                </div>
-                <div class="mb-3">
-                    <textarea class="form-control form-control-lg" rows="3" placeholder="Mensaje"
-                        style="border: none; padding: 15px; resize: none;"></textarea>
-                </div>
-                <button type="submit" class="btn btn-dark btn-lg w-100 fw-bold" style="padding: 15px;">ENVIAR</button>
-            </form>
+      <form (ngSubmit)="enviarFormularioInicio()">
+        <div class="mb-3">
+          <input
+            type="text"
+            class="form-control form-control-lg"
+            placeholder="Nombre"
+            [(ngModel)]="datosContactoInicio.nombre"
+            name="nombreInicio"
+            required
+          />
         </div>
+
+        <div class="mb-3">
+          <textarea
+            class="form-control form-control-lg"
+            rows="3"
+            placeholder="Mensaje"
+            [(ngModel)]="datosContactoInicio.mensaje"
+            name="mensajeInicio"
+            required
+          ></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-dark btn-lg w-100 fw-bold">
+          ENVIAR
+        </button>
+      </form>
     </div>
+  </div>
 </div>
 
 <!-- Formulario para móvil -->
 <div class="container d-lg-none mt-4">
-    <div class="p-4 rounded-1 shadow" style="background-color: #FF9800;">
-        <div class="d-flex align-items-center mb-4">
-            <i class="bi bi-file-earmark-text me-2" style="font-size: 1.8rem; color: white;"></i>
-            <h3 class="fw-bold mb-0 text-white" style="font-size: 1.8rem;">CONTACTAR</h3>
-        </div>
-
-        <form>
-            <div class="mb-3">
-                <input type="text" class="form-control form-control-lg" placeholder="Nombre"
-                    style="border: none; padding: 15px;">
-            </div>
-            <div class="mb-3">
-                <textarea class="form-control form-control-lg" rows="3" placeholder="Mensaje"
-                    style="border: none; padding: 15px; resize: none;"></textarea>
-            </div>
-            <button type="submit" class="btn btn-dark btn-lg w-100 fw-bold" style="padding: 15px;">ENVIAR</button>
-        </form>
+  <div class="p-4 rounded-1 shadow" style="background-color: #ff9800">
+    <div class="d-flex align-items-center mb-4">
+      <i
+        class="bi bi-file-earmark-text me-2"
+        style="font-size: 1.8rem; color: white"
+      ></i>
+      <h3 class="fw-bold mb-0 text-white" style="font-size: 1.8rem">
+        CONTACTAR
+      </h3>
     </div>
+
+    <form (ngSubmit)="enviarFormularioInicio()">
+      <div class="mb-3">
+        <input
+          type="text"
+          class="form-control form-control-lg"
+          placeholder="Nombre"
+          [(ngModel)]="datosContactoInicio.nombre"
+          name="nombreInicio"
+          required
+        />
+      </div>
+
+      <div class="mb-3">
+        <textarea
+          class="form-control form-control-lg"
+          rows="3"
+          placeholder="Mensaje"
+          [(ngModel)]="datosContactoInicio.mensaje"
+          name="mensajeInicio"
+          required
+        ></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-dark btn-lg w-100 fw-bold">
+        ENVIAR
+      </button>
+    </form>
+  </div>
 </div>
 
 <!-- Sección servicios -->
-<section class="py-5 mt-5" style="background-color: #f4f4f4;">
-    <div class="container text-center">
-        <!-- Título principal -->
-        <h2 class="fw-bold text-white py-3 mb-3" style="background-color: #000053;">NUESTROS SERVICIOS</h2>
-        <p class="mb-5" style="font-size: 2rem;">
-            Fusionamos técnica, estilo y cultura para construir espacios que inspiran.
-        </p>
+<section class="py-5 mt-5" style="background-color: #f4f4f4">
+  <div class="container text-center">
+    <!-- Título principal -->
+    <h2 class="fw-bold text-white py-3 mb-3" style="background-color: #000053">
+      NUESTROS SERVICIOS
+    </h2>
+    <p class="mb-5" style="font-size: 2rem">
+      Fusionamos técnica, estilo y cultura para construir espacios que inspiran.
+    </p>
 
-        <!-- Primera fila de servicios -->
-        <div class="row gy-4 mb-4">
-            <!-- Servicio 1: Construcción -->
-            <div class="col-12 col-md-6 col-lg-3" title="Ir al servicio">
-                <div class="servicio-card" (click)="abrirServicio('construccion')">
-                    <div class="position-relative mx-auto" style="width: 180px; height: 180px;">
-                        <div class="" style="width: 180px; height: 160px; margin: 25px auto;">
-                            <img src="servicios/construccion.png" alt="Construcción"
-                                class="w-80 h-100 object-fit-cover">
-                        </div>
-                    </div>
-                    <ul class="text-start mx-auto mt-1" style="max-width: 200px; font-size: 0.9rem;">
-                        <li>Edificios corporativos</li>
-                        <li>Vivienda residencial</li>
-                        <li>Infraestructura básica</li>
-                    </ul>
-                </div>
+    <!-- Primera fila de servicios -->
+    <div class="row gy-4 mb-4">
+      <!-- Servicio 1: Construcción -->
+      <div class="col-12 col-md-6 col-lg-3" title="Ir al servicio">
+        <div class="servicio-card" (click)="abrirServicio('construccion')">
+          <div
+            class="position-relative mx-auto"
+            style="width: 180px; height: 180px"
+          >
+            <div
+              class=""
+              style="width: 180px; height: 160px; margin: 25px auto"
+            >
+              <img
+                src="servicios/construccion.png"
+                alt="Construcción"
+                class="w-80 h-100 object-fit-cover"
+              />
             </div>
-
-            <!-- Servicio 2: Remodelación -->
-            <div class="col-12 col-md-6 col-lg-3" title="Ir al servicio">
-                <div class="servicio-card" (click)="abrirServicio('remodelacion')">
-                    <div class="position-relative mx-auto" style="width: 180px; height: 180px;">
-                        <div class="" style="width: 180px; height: 160px; margin: 25px auto;">
-                            <img src="servicios/remodelacion.png" alt="Remodelación"
-                                class="w-80 h-100 object-fit-cover">
-                        </div>
-                    </div>
-                    <ul class="text-start mx-auto mt-1" style="max-width: 200px; font-size: 0.9rem;">
-                        <li>Renovamos oficinas</li>
-                        <li>Modernizamos viviendas</li>
-                        <li>Diseño de interiores</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Servicio 3: Diseños 3D -->
-            <div class="col-12 col-md-6 col-lg-3" title="Ir al servicio">
-                <div class="servicio-card" (click)="abrirServicio('disenos3d')">
-                    <div class="position-relative mx-auto" style="width: 180px; height: 180px;">
-                        <div class="" style="width: 180px; height: 160px; margin: 25px auto;">
-                            <img src="servicios/disenos3d.png" alt="Diseños 3D" class="w-80 h-100 object-fit-cover">
-                        </div>
-                    </div>
-                    <ul class="text-start mx-auto mt-1" style="max-width: 200px; font-size: 0.9rem;">
-                        <li>Render para vivienda</li>
-                        <li>Modelo de interiores</li>
-                        <li>Proyectos arquitectos</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Servicio 4: Planificación -->
-            <div class="col-12 col-md-6 col-lg-3" title="Ir al servicio">
-                <div class="servicio-card" (click)="abrirServicio('planificacion')">
-                    <div class="position-relative mx-auto" style="width: 180px; height: 180px;">
-                        <div class="" style="width: 180px; height: 160px; margin: 25px auto;">
-                            <img src="servicios/planificacion.png" alt="Planificación"
-                                class="w-80 h-100 object-fit-cover">
-                        </div>
-                    </div>
-                    <ul class="text-start mx-auto mt-1" style="max-width: 200px; font-size: 0.9rem;">
-                        <li>Supervisión de proyectos</li>
-                        <li>Gestión y programación de obras</li>
-                        <li>Organización y control de proyectos</li>
-                    </ul>
-                </div>
-            </div>
+          </div>
+          <ul
+            class="text-start mx-auto mt-1"
+            style="max-width: 200px; font-size: 0.9rem"
+          >
+            <li>Edificios corporativos</li>
+            <li>Vivienda residencial</li>
+            <li>Infraestructura básica</li>
+          </ul>
         </div>
+      </div>
 
-        <!-- Segunda fila de servicios -->
-        <div class="row gy-4">
-            <!-- Servicio 5: Licencias de Construcción -->
-            <div class="col-12 col-md-6 col-lg-3" title="Ir al servicio">
-                <div class="servicio-card" (click)="abrirServicio('licencias')">
-                    <div class="position-relative mx-auto" style="width: 180px; height: 180px;">
-                        <div class="" style="width: 180px; height: 160px; margin: 25px auto;">
-                            <img src="servicios/licencias.png" alt="Licencias" class="w-80 h-100 object-fit-cover">
-                        </div>
-                    </div>
-                    <ul class="text-start mx-auto mt-1" style="max-width: 200px; font-size: 0.9rem;">
-                        <li>Tramitación de licencias municipales</li>
-                        <li>Gestión de permisos de obra</li>
-                        <li>Asesoría técnica y legal en contrsucción</li>
-                    </ul>
-                </div>
+      <!-- Servicio 2: Remodelación -->
+      <div class="col-12 col-md-6 col-lg-3" title="Ir al servicio">
+        <div class="servicio-card" (click)="abrirServicio('remodelacion')">
+          <div
+            class="position-relative mx-auto"
+            style="width: 180px; height: 180px"
+          >
+            <div
+              class=""
+              style="width: 180px; height: 160px; margin: 25px auto"
+            >
+              <img
+                src="servicios/remodelacion.png"
+                alt="Remodelación"
+                class="w-80 h-100 object-fit-cover"
+              />
             </div>
-
-            <!-- Servicio 6: Avalúos -->
-            <div class="col-12 col-md-6 col-lg-3" title="Ir al servicio">
-                <div class="servicio-card" (click)="abrirServicio('avaluos')">
-                    <div class="position-relative mx-auto" style="width: 180px; height: 180px;">
-                        <div class="" style="width: 180px; height: 160px; margin: 25px auto;">
-                            <img src="servicios/avaluos.png" alt="Avalúos" class="w-80 h-100 object-fit-cover">
-                        </div>
-                    </div>
-                    <ul class="text-start mx-auto mt-1" style="max-width: 200px; font-size: 0.9rem;">
-                        <li>Avalúos comerciales y residenciales</li>
-                        <li>Inspección y análisis estructural</li>
-                        <li>Tasación de propiedades</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Servicio 7: Alquiler de Maquinaria -->
-            <div class="col-12 col-md-6 col-lg-3" title="Ir al servicio">
-                <div class="servicio-card" (click)="abrirServicio('maquinaria')">
-                    <div class="position-relative mx-auto" style="width: 180px; height: 180px;">
-                        <div class="" style="width: 180px; height: 160px; margin: 25px auto;">
-                            <img src="servicios/maquinaria.png" alt="Maquinaria" class="w-80 h-100 object-fit-cover">
-                        </div>
-                    </div>
-                    <ul class="text-start mx-auto mt-1" style="max-width: 200px; font-size: 0.9rem;">
-                        <li>Excavadoras y retroexacvadoras</li>
-                        <li>Concreteras</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Servicio 8: Alquiler Camión de Volteo -->
-            <div class="col-12 col-md-6 col-lg-3" title="Ir al servicio">
-                <div class="servicio-card" (click)="abrirServicio('camion')">
-                    <div class="position-relative mx-auto" style="width: 180px; height: 180px;">
-                        <div class="" style="width: 180px; height: 160px; margin: 25px auto;">
-                            <img src="servicios/camion.png" alt="Camión" class="w-80 h-100 object-fit-cover">
-                        </div>
-                    </div>
-                    <ul class="text-start mx-auto mt-1" style="max-width: 200px; font-size: 0.9rem;">
-                        <li>Alquiler por hora o por día</li>
-                        <li>Retiro de escombros</li>
-                        <li>Transporte de material</li>
-                    </ul>
-                </div>
-            </div>
+          </div>
+          <ul
+            class="text-start mx-auto mt-1"
+            style="max-width: 200px; font-size: 0.9rem"
+          >
+            <li>Renovamos oficinas</li>
+            <li>Modernizamos viviendas</li>
+            <li>Diseño de interiores</li>
+          </ul>
         </div>
+      </div>
+
+      <!-- Servicio 3: Diseños 3D -->
+      <div class="col-12 col-md-6 col-lg-3" title="Ir al servicio">
+        <div class="servicio-card" (click)="abrirServicio('disenos3d')">
+          <div
+            class="position-relative mx-auto"
+            style="width: 180px; height: 180px"
+          >
+            <div
+              class=""
+              style="width: 180px; height: 160px; margin: 25px auto"
+            >
+              <img
+                src="servicios/disenos3d.png"
+                alt="Diseños 3D"
+                class="w-80 h-100 object-fit-cover"
+              />
+            </div>
+          </div>
+          <ul
+            class="text-start mx-auto mt-1"
+            style="max-width: 200px; font-size: 0.9rem"
+          >
+            <li>Render para vivienda</li>
+            <li>Modelo de interiores</li>
+            <li>Proyectos arquitectos</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Servicio 4: Planificación -->
+      <div class="col-12 col-md-6 col-lg-3" title="Ir al servicio">
+        <div class="servicio-card" (click)="abrirServicio('planificacion')">
+          <div
+            class="position-relative mx-auto"
+            style="width: 180px; height: 180px"
+          >
+            <div
+              class=""
+              style="width: 180px; height: 160px; margin: 25px auto"
+            >
+              <img
+                src="servicios/planificacion.png"
+                alt="Planificación"
+                class="w-80 h-100 object-fit-cover"
+              />
+            </div>
+          </div>
+          <ul
+            class="text-start mx-auto mt-1"
+            style="max-width: 200px; font-size: 0.9rem"
+          >
+            <li>Supervisión de proyectos</li>
+            <li>Gestión y programación de obras</li>
+            <li>Organización y control de proyectos</li>
+          </ul>
+        </div>
+      </div>
     </div>
+
+    <!-- Segunda fila de servicios -->
+    <div class="row gy-4">
+      <!-- Servicio 5: Licencias de Construcción -->
+      <div class="col-12 col-md-6 col-lg-3" title="Ir al servicio">
+        <div class="servicio-card" (click)="abrirServicio('licencias')">
+          <div
+            class="position-relative mx-auto"
+            style="width: 180px; height: 180px"
+          >
+            <div
+              class=""
+              style="width: 180px; height: 160px; margin: 25px auto"
+            >
+              <img
+                src="servicios/licencias.png"
+                alt="Licencias"
+                class="w-80 h-100 object-fit-cover"
+              />
+            </div>
+          </div>
+          <ul
+            class="text-start mx-auto mt-1"
+            style="max-width: 200px; font-size: 0.9rem"
+          >
+            <li>Tramitación de licencias municipales</li>
+            <li>Gestión de permisos de obra</li>
+            <li>Asesoría técnica y legal en contrsucción</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Servicio 6: Avalúos -->
+      <div class="col-12 col-md-6 col-lg-3" title="Ir al servicio">
+        <div class="servicio-card" (click)="abrirServicio('avaluos')">
+          <div
+            class="position-relative mx-auto"
+            style="width: 180px; height: 180px"
+          >
+            <div
+              class=""
+              style="width: 180px; height: 160px; margin: 25px auto"
+            >
+              <img
+                src="servicios/avaluos.png"
+                alt="Avalúos"
+                class="w-80 h-100 object-fit-cover"
+              />
+            </div>
+          </div>
+          <ul
+            class="text-start mx-auto mt-1"
+            style="max-width: 200px; font-size: 0.9rem"
+          >
+            <li>Avalúos comerciales y residenciales</li>
+            <li>Inspección y análisis estructural</li>
+            <li>Tasación de propiedades</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Servicio 7: Alquiler de Maquinaria -->
+      <div class="col-12 col-md-6 col-lg-3" title="Ir al servicio">
+        <div class="servicio-card" (click)="abrirServicio('maquinaria')">
+          <div
+            class="position-relative mx-auto"
+            style="width: 180px; height: 180px"
+          >
+            <div
+              class=""
+              style="width: 180px; height: 160px; margin: 25px auto"
+            >
+              <img
+                src="servicios/maquinaria.png"
+                alt="Maquinaria"
+                class="w-80 h-100 object-fit-cover"
+              />
+            </div>
+          </div>
+          <ul
+            class="text-start mx-auto mt-1"
+            style="max-width: 200px; font-size: 0.9rem"
+          >
+            <li>Excavadoras y retroexacvadoras</li>
+            <li>Concreteras</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Servicio 8: Alquiler Camión de Volteo -->
+      <div class="col-12 col-md-6 col-lg-3" title="Ir al servicio">
+        <div class="servicio-card" (click)="abrirServicio('camion')">
+          <div
+            class="position-relative mx-auto"
+            style="width: 180px; height: 180px"
+          >
+            <div
+              class=""
+              style="width: 180px; height: 160px; margin: 25px auto"
+            >
+              <img
+                src="servicios/camion.png"
+                alt="Camión"
+                class="w-80 h-100 object-fit-cover"
+              />
+            </div>
+          </div>
+          <ul
+            class="text-start mx-auto mt-1"
+            style="max-width: 200px; font-size: 0.9rem"
+          >
+            <li>Alquiler por hora o por día</li>
+            <li>Retiro de escombros</li>
+            <li>Transporte de material</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- Sección diferenciadores -->
-<section class="py-5" style="background: #f4f4f4;">
-    <div class="container">
-        <div class="p-4 mb-5 rounded-3" style="background: linear-gradient(135deg, #FF8C00 0%, #FFA500 100%);">
-            <h2 class="text-center fw-bold text-white mb-5 texto-defirenciador"
-                style="font-size: 2.5rem; letter-spacing: 2px;">
-                DIFERENCIADORES
-            </h2>
+<section class="py-5" style="background: #f4f4f4">
+  <div class="container">
+    <div
+      class="p-4 mb-5 rounded-3"
+      style="background: linear-gradient(135deg, #ff8c00 0%, #ffa500 100%)"
+    >
+      <h2
+        class="text-center fw-bold text-white mb-5 texto-defirenciador"
+        style="font-size: 2.5rem; letter-spacing: 2px"
+      >
+        DIFERENCIADORES
+      </h2>
 
-            <div class="row g-4">
-                <div class="col-12 col-sm-6 col-lg-3">
-                    <div class="diferenciador-card text-white p-4 h-100" style="background-color: #000053;">
-                        <div class="text-center mb-3">
-                            <i class="bi bi-gear" style="font-size: 3.5rem;"></i>
-                        </div>
-                        <p class="text-center mb-0" style="font-size: 0.95rem; line-height: 1.6;">
-                            Optimizamos cada minuto y recurso para que tu proyecto avance con agilidad y sin
-                            contratiempos.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="col-12 col-sm-6 col-lg-3">
-                    <div class="diferenciador-card bg-white p-4 h-100">
-                        <div class="text-center mb-3">
-                            <i class="bi bi-rulers" style="font-size: 3.5rem; color: #000053;"></i>
-                        </div>
-                        <p class="text-center mb-0" style="font-size: 0.95rem; line-height: 1.6; color: #333;">
-                            Cumplimos lo que prometemos: entregas puntuales y resultados que superan expectativas.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="col-12 col-sm-6 col-lg-3">
-                    <div class="diferenciador-card text-white p-4 h-100" style="background-color: #000053;">
-                        <div class="text-center mb-3">
-                            <i class="bi bi-chat-dots" style="font-size: 3.5rem;"></i>
-                        </div>
-                        <p class="text-center mb-0" style="font-size: 0.95rem; line-height: 1.6;">
-                            Tu tranquilidad es lo más importante. Trabajamos con calidad y transparencia en cada
-                            detalle.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="col-12 col-sm-6 col-lg-3">
-                    <div class="diferenciador-card bg-white p-4 h-100">
-                        <div class="text-center mb-3">
-                            <i class="bi bi-plug" style="font-size: 3.5rem; color: #000053;"></i>
-                        </div>
-                        <p class="text-center mb-0" style="font-size: 0.95rem; line-height: 1.6; color: #333;">
-                            Servicio completo: construcción, remodelación y diseño en 3D para hacer realidad tus ideas.
-                        </p>
-                    </div>
-                </div>
+      <div class="row g-4">
+        <div class="col-12 col-sm-6 col-lg-3">
+          <div
+            class="diferenciador-card text-white p-4 h-100"
+            style="background-color: #000053"
+          >
+            <div class="text-center mb-3">
+              <i class="bi bi-gear" style="font-size: 3.5rem"></i>
             </div>
+            <p
+              class="text-center mb-0"
+              style="font-size: 0.95rem; line-height: 1.6"
+            >
+              Optimizamos cada minuto y recurso para que tu proyecto avance con
+              agilidad y sin contratiempos.
+            </p>
+          </div>
         </div>
 
-        <div class="row g-4">
-
-            <div class="col-12 col-lg-6">
-                <div class="estadistica-img-vertical">
-                    <img src="diferenciadores/imgDiferenciador.png" alt="Proyecto en construcción"
-                        class="w-100 h-100 object-fit-cover rounded-3 shadow">
-                </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+          <div class="diferenciador-card bg-white p-4 h-100">
+            <div class="text-center mb-3">
+              <i
+                class="bi bi-rulers"
+                style="font-size: 3.5rem; color: #000053"
+              ></i>
             </div>
-
-            <div class="col-12 col-lg-6">
-                <div class="row g-4 h-100">
-
-                    <div class="col-6">
-                        <div class="estadistica-card text-white text-center p-4 h-100 d-flex flex-column justify-content-center rounded-3 shadow"
-                            style="background-color: #FF8C00;">
-                            <h2 class="fw-bold mb-2 texto-estadisticaN">+100</h2>
-                            <p class="fw-bold mb-0 texto-estadisticaT">PROYECTOS CONSTRUIDOS</p>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="estadistica-img-small rounded-3 shadow">
-                            <img src="diferenciadores/imgDiferenciador2.png" alt="Proyectos terminados"
-                                class="w-100 h-100 object-fit-cover">
-                        </div>
-                    </div>
-
-                    <div class="col-6">
-                        <div class="estadistica-img-small rounded-3 shadow">
-                            <img src="diferenciadores/imgDiferenciador3.png" alt="Construcción en proceso"
-                                class="w-100 h-100 object-fit-cover">
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="estadistica-card text-white text-center p-4 h-100 d-flex flex-column justify-content-center rounded-3 shadow"
-                            style="background-color: #FF8C00;">
-                            <h2 class="fw-bold mb-2 texto-estadisticaN">+700,000</h2>
-                            <p class="fw-bold mb-0 texto-estadisticaT">METROS CUADRADOS DE CONSTRUCCIÓN</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <p
+              class="text-center mb-0"
+              style="font-size: 0.95rem; line-height: 1.6; color: #333"
+            >
+              Cumplimos lo que prometemos: entregas puntuales y resultados que
+              superan expectativas.
+            </p>
+          </div>
         </div>
+
+        <div class="col-12 col-sm-6 col-lg-3">
+          <div
+            class="diferenciador-card text-white p-4 h-100"
+            style="background-color: #000053"
+          >
+            <div class="text-center mb-3">
+              <i class="bi bi-chat-dots" style="font-size: 3.5rem"></i>
+            </div>
+            <p
+              class="text-center mb-0"
+              style="font-size: 0.95rem; line-height: 1.6"
+            >
+              Tu tranquilidad es lo más importante. Trabajamos con calidad y
+              transparencia en cada detalle.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-3">
+          <div class="diferenciador-card bg-white p-4 h-100">
+            <div class="text-center mb-3">
+              <i
+                class="bi bi-plug"
+                style="font-size: 3.5rem; color: #000053"
+              ></i>
+            </div>
+            <p
+              class="text-center mb-0"
+              style="font-size: 0.95rem; line-height: 1.6; color: #333"
+            >
+              Servicio completo: construcción, remodelación y diseño en 3D para
+              hacer realidad tus ideas.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <div class="row g-4">
+      <div class="col-12 col-lg-6">
+        <div class="estadistica-img-vertical">
+          <img
+            src="diferenciadores/imgDiferenciador.png"
+            alt="Proyecto en construcción"
+            class="w-100 h-100 object-fit-cover rounded-3 shadow"
+          />
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-6">
+        <div class="row g-4 h-100">
+          <div class="col-6">
+            <div
+              class="estadistica-card text-white text-center p-4 h-100 d-flex flex-column justify-content-center rounded-3 shadow"
+              style="background-color: #ff8c00"
+            >
+              <h2 class="fw-bold mb-2 texto-estadisticaN">+100</h2>
+              <p class="fw-bold mb-0 texto-estadisticaT">
+                PROYECTOS CONSTRUIDOS
+              </p>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="estadistica-img-small rounded-3 shadow">
+              <img
+                src="diferenciadores/imgDiferenciador2.png"
+                alt="Proyectos terminados"
+                class="w-100 h-100 object-fit-cover"
+              />
+            </div>
+          </div>
+
+          <div class="col-6">
+            <div class="estadistica-img-small rounded-3 shadow">
+              <img
+                src="diferenciadores/imgDiferenciador3.png"
+                alt="Construcción en proceso"
+                class="w-100 h-100 object-fit-cover"
+              />
+            </div>
+          </div>
+          <div class="col-6">
+            <div
+              class="estadistica-card text-white text-center p-4 h-100 d-flex flex-column justify-content-center rounded-3 shadow"
+              style="background-color: #ff8c00"
+            >
+              <h2 class="fw-bold mb-2 texto-estadisticaN">+700,000</h2>
+              <p class="fw-bold mb-0 texto-estadisticaT">
+                METROS CUADRADOS DE CONSTRUCCIÓN
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- Sección proveedores -->
 <section class="py-5">
-    <app-galeria [imagenesGaleria]="imagenesProveedores" [nombreGaleria]="'NUESTROS PROVEEDORES'"
-        [codigoCarrusel]="codigoCarruselProveedores"></app-galeria>
+  <app-galeria
+    [imagenesGaleria]="imagenesProveedores"
+    [nombreGaleria]="'NUESTROS PROVEEDORES'"
+    [codigoCarrusel]="codigoCarruselProveedores"
+  ></app-galeria>
 </section>
 
 <!-- Sección clientes -->
 <section class="py-5">
-    <app-galeria [imagenesGaleria]="imagenesClientes" [nombreGaleria]="'NUESTROS CLIENTES'"
-        [codigoCarrusel]="codigoCarruselClientes"></app-galeria>
+  <app-galeria
+    [imagenesGaleria]="imagenesClientes"
+    [nombreGaleria]="'NUESTROS CLIENTES'"
+    [codigoCarrusel]="codigoCarruselClientes"
+  ></app-galeria>
 </section>
 
 <!-- Sección historia de exito -->
-<section class="hero-section text-white d-flex align-items-center" [style.backgroundImage]="'url(BannerInicio2.png)'">
+<section
+  class="hero-section text-white d-flex align-items-center"
+  [style.backgroundImage]="'url(BannerInicio2.png)'"
+>
+  <div
+    class="overlay-gradient"
+    [style.backgroundImage]="'url(linearInicio.png)'"
+  ></div>
 
-    <div class="overlay-gradient" [style.backgroundImage]="'url(linearInicio.png)'"></div>
-
-    <div class="container position-relative z-1">
-        <div class="row">
-            <div class="col-lg-8 col-md-10 text-lg-start">
-                <h1 class="display-3 fw-bold mb-4">
-                    CONSTRUYE TU <br> HISTORIA DE ÉXITO
-                </h1>
-                <p class="mb-5 pe-lg-5">
-                    Garantizamos la entrega de cada proyecto a tiempo y dentro del presupuesto,
-                    brindando a nuestros clientes la confianza y tranquilidad que necesitan.
-                </p>
-                <a href="/contacto" class="btn btn-primary btn-lg custom-btn-orange">
-                    CONTACTAR
-                </a>
-            </div>
-        </div>
+  <div class="container position-relative z-1">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 text-lg-start">
+        <h1 class="display-3 fw-bold mb-4">
+          CONSTRUYE TU <br />
+          HISTORIA DE ÉXITO
+        </h1>
+        <p class="mb-5 pe-lg-5">
+          Garantizamos la entrega de cada proyecto a tiempo y dentro del
+          presupuesto, brindando a nuestros clientes la confianza y tranquilidad
+          que necesitan.
+        </p>
+        <a href="/contacto" class="btn btn-primary btn-lg custom-btn-orange">
+          CONTACTAR
+        </a>
+      </div>
     </div>
+  </div>
 </section>

@@ -335,23 +335,29 @@ export class ServiciosComponent implements OnInit {
   eliminarImagenServicio(): void {
     if (!this.servicioData) return;
 
-    if (!confirm('¿Desea eliminar la imagen del servicio?')) return;
+    this.alertaServicio
+      .Confirmacion(
+        '¿Está seguro que desea eliminar la imagen del servicio?',
+        'Esta acción no se puede deshacer.'
+      )
+      .then((confirmado) => {
+        if (!confirmado) return;
 
-    const payload: Servicio = {
-      ...this.servicioData,
-      UrlImagen: '',
-      Estatus: 1,
-    };
+        const payload: Servicio = {
+          ...this.servicioData,
+          UrlImagen: '',
+          Estatus: 1,
+        };
 
-    this.servicioServicios.Editar(payload).subscribe({
-      next: () => {
-        this.servicioData!.UrlImagen = '';
-        this.alertaServicio.MostrarExito('Imagen eliminada');
-      },
-      error: () => {
-        this.alertaServicio.MostrarError('Error al eliminar la imagen');
-      },
-    });
+        this.servicioServicios.Editar(payload).subscribe({
+          next: () => {
+            this.servicioData!.UrlImagen = '';
+            this.alertaServicio.MostrarExito('Imagen eliminada correctamente');
+          },
+          error: () => {
+            this.alertaServicio.MostrarError('Error al eliminar la imagen');
+          },
+        });
+      });
   }
-
 }
