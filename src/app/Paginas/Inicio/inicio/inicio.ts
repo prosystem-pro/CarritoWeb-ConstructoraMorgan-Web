@@ -237,7 +237,7 @@ export class Inicio implements OnInit {
     }
 
     
-    if(this.datosContactoInicio.nombre === '' && this.datosContactoInicio.mensaje === ''){
+    if(this.datosContactoInicio.nombre === '' || this.datosContactoInicio.mensaje === ''){
       this.alertaServicio.MostrarAlerta('Complete todos los campos');
       return;
     }

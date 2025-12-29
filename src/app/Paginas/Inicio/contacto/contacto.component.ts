@@ -96,7 +96,7 @@ export class ContactoComponent implements OnInit {
 
   enviarFormulario(): void {
 
-    if(this.datosContacto.nombre === '' && this.datosContacto.telefono === ''){
+    if(this.datosContacto.nombre === '' || this.datosContacto.telefono === ''){
       this.AlertaServicio.MostrarAlerta('Complete todos los campos obligatorios');
       return;
     }
