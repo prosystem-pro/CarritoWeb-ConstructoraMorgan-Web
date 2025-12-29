@@ -2,6 +2,7 @@
   background: linear-gradient(135deg, #F8F6FD 0%, #F8F6FD 100%);
   padding: 3rem 0;
   color: #fff;
+  scroll-margin-top: 80px; /* alto del navbar */
 }
 
 .proyectos-titulo {

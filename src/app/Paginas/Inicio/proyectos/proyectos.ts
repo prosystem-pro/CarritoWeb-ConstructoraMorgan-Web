@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CarouselModalComponent } from '../../../Componentes/carousel-modal/carousel-modal.component';
@@ -33,6 +33,7 @@ declare var bootstrap: any;
 })
 export class Proyectos implements OnInit {
    @ViewChild(CarouselModalComponent) carouselModal!: CarouselModalComponent;
+   @ViewChild('inicioProyectos') inicioProyectos!: ElementRef;
 
   proyectos: Carrusel[] = [];
   todasLasImagenes: CarruselImagen[] = [];
@@ -159,9 +160,16 @@ export class Proyectos implements OnInit {
   cambiarPagina(pagina: number): void {
     if (pagina >= 1 && pagina <= this.totalPaginas) {
       this.paginaActual = pagina;
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      setTimeout(() => {
+        this.inicioProyectos.nativeElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      });
     }
   }
+
 
   obtenerImagenesProyecto(codigoCarrusel: number | undefined): CarruselImagen[] {
     if (!codigoCarrusel) return [];

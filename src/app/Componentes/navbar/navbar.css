@@ -77,6 +77,15 @@
     margin-left: 10px;
 }
 
+.iconos-redes a {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.iconos-redes a:hover {
+  transform: scale(1.2);
+}
+
 /* Vista móvil */
 @media (max-width: 991.98px) {
     .btn-logout {

@@ -73,7 +73,7 @@
     color: #f39c12;
     font-size: 1.8rem;
     font-weight: 600;
-    margin-bottom: -15px;
+    /* margin-bottom: -15px; */
     display: flex;
     align-items: center;
 }
@@ -143,5 +143,6 @@
     .hero-list li {
         font-size: 1.4rem;
         justify-content: center;
+        line-height: 0.9;
     }
 }

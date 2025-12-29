@@ -214,7 +214,8 @@ export class Inicio implements OnInit {
     };
 
     const servicioId = mapaServicios[servicio] || servicio;
-    this.router.navigate(['/servicio', servicioId]);
+    // this.router.navigate(['/servicio', servicioId]);
+    window.location.href = `/servicio/${servicioId}`;
   }
 
   isIOS(): boolean {
