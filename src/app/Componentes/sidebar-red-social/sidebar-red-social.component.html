@@ -3,8 +3,7 @@
     <div class="social-icons mobile-social-icons mx-auto">
         <a *ngFor="let red of RedeSocial" [href]="red.Link" target="_blank" rel="noopener noreferrer"
             class="social-item social-icon position-relative d-inline-block">
-            <img [src]="red.Imagenes[0]?.UrlImagen || ''" [alt]="red.NombreRedSocial"
-                (click)="ReportarRedSocial(red.CodigoRedSocial)" />
+            <img [src]="red.Imagenes[0]?.UrlImagen || ''" [alt]="red.NombreRedSocial" />
             <!-- Botón cámara -->
             <label *ngIf="Permiso.TienePermiso('RedSocialImagen', 'SubirImagen')"
                 class="position-absolute bottom-0 end-0 bg-white rounded-circle d-flex align-items-center justify-content-center"

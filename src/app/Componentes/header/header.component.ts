@@ -11,7 +11,6 @@ import { CarritoComponent } from '../carrito/carrito.component';
 import { RedSocialServicio } from '../../Servicios/RedSocialServicio';
 import { AlertaServicio } from '../../Servicios/Alerta-Servicio';
 import { PermisoServicio } from '../../Autorizacion/AutorizacionPermiso';
-import { ReporteRedSocialServicio } from '../../Servicios/ReporteRedSocialServicio';
 import { RedSocialImagenServicio } from '../../Servicios/RedSocialImagenServicio';
 import { CarritoEstadoService } from '../../Servicios/CarritoEstadoServicio';
 import { EmpresaServicio } from '../../Servicios/EmpresaServicio'; // Importar el servicio
@@ -58,7 +57,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private redSocialImagenServicio: RedSocialImagenServicio,
     private AlertaServicio: AlertaServicio,
     private carritoEstadoService: CarritoEstadoService,
-    private ReporteRedSocialServicio: ReporteRedSocialServicio,
     private menuPortadaServicio: MenuPortadaServicio,
     private EmpresaServicio: EmpresaServicio
   ) { }
@@ -312,23 +310,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   // Los demás métodos permanecen igual...
-  ReportarRedSocial(codigo: number | undefined): void {
-    if (codigo === undefined) {
-      console.warn('⚠️ Código de red social no definido, no se reporta');
-      return;
-    }
-
-    const Datos = {
-      CodigoRedSocial: codigo.toString(),
-      Navegador: this.ObtenerNavegador()
-    };
-
-    this.ReporteRedSocialServicio.Crear(Datos).subscribe({
-      next: (respuesta) => console.log('Red social reportada:', respuesta),
-      error: (error) => console.error('Error al reportar red social:', error)
-    });
-  }
-
   ObtenerNavegador(): string {
     const AgenteUsuario = navigator.userAgent;
 

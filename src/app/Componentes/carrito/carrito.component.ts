@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ServicioCompartido } from '../../Servicios/ServicioCompartido';
 import { EmpresaServicio } from '../../Servicios/EmpresaServicio';
 import { RedSocialServicio } from '../../Servicios/RedSocialServicio';
-import { ReporteProductoServicio } from '../../Servicios/ReporteProductoServicio';
 import { AlertaServicio } from '../../Servicios/Alerta-Servicio';
 
 interface ProductoConCantidad {
@@ -32,7 +31,7 @@ export class CarritoComponent implements OnInit {
   total: number = 0;
 
   constructor(private carritoService: ServicioCompartido, private empresaServicio: EmpresaServicio, private RedSocialServicio: RedSocialServicio,
-    private ReporteProductoServicio: ReporteProductoServicio, private AlertaServicio: AlertaServicio
+    private AlertaServicio: AlertaServicio
   ) { }
 
   ngOnInit(): void {
@@ -88,57 +87,6 @@ export class CarritoComponent implements OnInit {
   cerrar(): void {
     this.cerrarCarrito.emit();
   }
-  ReportarProductosVendidos(): void {
-    const productosValidos = this.productosCarrito
-      .filter(producto => producto.CodigoProducto && producto.cantidad)
-      .map(producto => ({
-        CodigoProducto: producto.CodigoProducto,
-        CantidadVendida: producto.cantidad,
-        Navegador: this.ObtenerNavegador()
-      }));
-
-    if (productosValidos.length === 0) {
-      console.warn('No hay productos válidos para reportar.');
-      return;
-    }
-
-    this.ReporteProductoServicio.Crear(productosValidos).subscribe({
-      next: (respuesta) => {
-      },
-      error: (error) => {
-        this.isLoading = false;
-        const tipo = error?.error?.tipo;
-        const mensaje =
-          error?.error?.error?.message ||
-          error?.error?.message ||
-          'Ocurrió un error inesperado.';
-
-        if (tipo === 'Alerta') {
-          this.AlertaServicio.MostrarAlerta(mensaje);
-        } else {
-          this.AlertaServicio.MostrarError({ error: { message: mensaje } });
-        }
-        this.errorMessage = mensaje;
-      }
-    });
-  }
-
-  ObtenerNavegador(): string {
-    const AgenteUsuario = navigator.userAgent;
-
-    if (AgenteUsuario.includes('Chrome') && !AgenteUsuario.includes('Edg')) {
-      return 'Chrome';
-    } else if (AgenteUsuario.includes('Firefox')) {
-      return 'Firefox';
-    } else if (AgenteUsuario.includes('Safari') && !AgenteUsuario.includes('Chrome')) {
-      return 'Safari';
-    } else if (AgenteUsuario.includes('Edg')) {
-      return 'Edge';
-    } else {
-      return 'Desconocido';
-    }
-  }
-
   isIOS(): boolean {
     return /iPhone|iPad|iPod/.test(navigator.userAgent);
   }
@@ -198,7 +146,6 @@ export class CarritoComponent implements OnInit {
   // }
 
   realizarPedido(): void {
-    this.ReportarProductosVendidos();
 
     const esIOS = this.isIOS() && this.isSafari();
     const esAndroid = this.isAndroid();
